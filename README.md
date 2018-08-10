@@ -1,6 +1,7 @@
 # vue2-koa2-mongodb
-vue2-koa2-mongodb搭建的博客
+>vue2-koa2-mongodb搭建的博客
 
+``` bash
 #搭建流程<br>
 
 #安装koa-generator<br>
@@ -23,11 +24,7 @@ ChromeDriver installation failed Error with http(s) request: Error: read ETIMEDO
 
 #再次执行<br>
 npm install
-
-
-# node
-
-> A Vue.js project
+```
 
 ## Build Setup
 
