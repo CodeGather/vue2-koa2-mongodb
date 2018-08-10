@@ -19,6 +19,6 @@ npm install -g pm2
 pm2 start ./bin/www
 
 #报错信息解决办法
-#ChromeDriver installation failed Error with http(s) request: Error: read ETIMEDOUT
+ChromeDriver installation failed Error with http(s) request: Error: read ETIMEDOUT
 #再次执行
 npm install
