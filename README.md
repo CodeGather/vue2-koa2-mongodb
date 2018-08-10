@@ -10,15 +10,20 @@ npm install -g koa-generator
 koa2 .
 
 #安装依赖
+
 npm install
 
 #安装进程守护
+
 npm install -g pm2
 
 #使用pm2开启服务
+
 pm2 start ./bin/www
 
 #报错信息解决办法
+
 ChromeDriver installation failed Error with http(s) request: Error: read ETIMEDOUT
 #再次执行
+
 npm install
