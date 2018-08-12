@@ -20,12 +20,16 @@ export default {
   },
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
       msg: 'Hello World!'
     }
+  },
+  mounted(){
+    this.$http.get('/api/v1/json').then((data)=>{
+      console.log(data)
+    })
+  },
+  methods: {
+
   }
 }
 </script>
