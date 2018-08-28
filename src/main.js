@@ -6,6 +6,7 @@ import FastClick from 'fastclick'
 import store from './store'
 import axios from 'axios'
 import App from './App'
+
 Vue.use(VueOccupy)
 Vue.use(VueRouter)
 

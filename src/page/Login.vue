@@ -1,5 +1,6 @@
 <template>
   <div>
+    <x-header slot="header">用户登录</x-header>
     <div class="vux-demo" @click="handLogin">
       <img class="logo" src="../assets/vux_logo.png">
       <h1> </h1>
@@ -13,11 +14,13 @@
 <script>
 import { mapActions } from 'vuex'
 import { Group, Cell } from 'vux'
+import { XHeader } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/utils/axios'
 
 export default {
   components: {
+    XHeader,
     Group,
     Cell
   },

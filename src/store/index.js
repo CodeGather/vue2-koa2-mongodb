@@ -7,7 +7,8 @@ Vue.use(Vuex);
 
 const state = {
   token: window.sessionStorage.getItem('token'),
-  username: ''
+  username: '',
+  isLoading: false
 };
 
 const mutations = {
@@ -25,6 +26,9 @@ const mutations = {
     // 把用户名存起来
     state.username = data;
     window.sessionStorage.setItem('username', data);
+  },
+  updateLoadingStatus: (state, payload) => {
+    state.isLoading = payload.isLoading
   }
 };
 

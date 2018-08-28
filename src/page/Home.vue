@@ -1,51 +1,60 @@
 <template>
-  <div>
-    <group>
-      <cell is-link title="Simple" link="/login"></cell>
-      <cell is-link title="Switch icons" link="/component/tabbar-icon"></cell>
+  <div style="height:100%">
+    <view-box>
+      <x-header slot="header" :left-options="{showBack: false}">首页</x-header>
+      <group>
+        <cell is-link title="Simple" link="/login"></cell>
+        <cell is-link :title="title" link="/component/tabbar-icon"></cell>
+      </group>
       <div v-occupy="{ data: content, config }"></div>
-    </group>
-    <router-view></router-view>
-    <tabbar>
-      <tabbar-item>
-        <img slot="icon" src="../assets/tab/icon_nav_button.png">
-        <span slot="label">Wechat</span>
-      </tabbar-item>
-      <tabbar-item show-dot>
-        <img slot="icon" src="../assets/tab/icon_nav_msg.png">
-        <span slot="label">Message</span>
-      </tabbar-item>
-      <tabbar-item selected link="/component/demo">
-        <img slot="icon" src="../assets/tab/icon_nav_article.png">
-        <span slot="label">Explore</span>
-      </tabbar-item>
-      <tabbar-item badge="2">
-        <img slot="icon" src="../assets/tab/icon_nav_cell.png">
-        <span slot="label">News</span>
-      </tabbar-item>
-    </tabbar>
+      <div v-occupy="{ data: content, config }"></div>
+      <div v-occupy="{ data: content, config }"></div>
+      <div v-occupy="{ data: content, config }"></div>
+      <router-view></router-view>
+      <tabbar>
+        <tabbar-item>
+          <img slot="icon" src="../assets/tab/icon_nav_button.png">
+          <span slot="label">Wechat</span>
+        </tabbar-item>
+        <tabbar-item show-dot>
+          <img slot="icon" src="../assets/tab/icon_nav_msg.png">
+          <span slot="label">Message</span>
+        </tabbar-item>
+        <tabbar-item selected link="/component/demo">
+          <img slot="icon" src="../assets/tab/icon_nav_article.png">
+          <span slot="label">Explore</span>
+        </tabbar-item>
+        <tabbar-item badge="2">
+          <img slot="icon" src="../assets/tab/icon_nav_cell.png">
+          <span slot="label">News</span>
+        </tabbar-item>
+      </tabbar>
+    </view-box>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
 import store from '../store'
-import { Tabbar, TabbarItem, Group, Cell } from 'vux'
+import { XHeader, Tabbar, TabbarItem, Group, Cell, ViewBox } from 'vux'
 import { loginByUsername } from '@/utils/api'
 
 export default {
   components: {
+    XHeader,
     Tabbar,
     TabbarItem,
     Group,
-    Cell
+    Cell,
+    ViewBox
   },
   data () {
     return {
       msg: 'Hello World!',
       content: '',
+      title:'',
       config: {
-        width: '200px',
+        width: '100%',
         height: '18px',
         background: 'rgb(194, 207, 214)',
         'background-image': 'linear-gradient(90deg,rgba(255, 255, 255, 0.15) 25%, transparent 25%)',
@@ -58,6 +67,7 @@ export default {
       console.log(result)
       setTimeout(()=>{
         this.$store.dispatch('UserName', result.url);
+        this.title = result.url
         this.content = result.url
       },2000)
     })
@@ -80,11 +90,9 @@ export default {
 </script>
 
 <style lang="less">
-.vux-demo {
-  text-align: center;
-}
-.logo {
-  width: 100px;
-  height: 100px
+html, body {
+  height: 100%;
+  width: 100%;
+  background-color: #fbf9fe;
 }
 </style>
