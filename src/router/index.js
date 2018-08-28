@@ -1,11 +1,13 @@
 import Vue from 'vue'
-import store from '../store/index'
 import Router from 'vue-router'
+import store from '../store/index'
 
 Vue.use(Router)
 
 const home = r => require.ensure([], () => r(require('@/page/Home')), 'home')
 const login = r => require.ensure([], () => r(require('@/page/Login')), 'login')
+const courseList = r => require.ensure([], () => r(require('@/page/CourseList')), 'courseList')
+const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'personal')
 
 const router = new Router({
   mode: 'history',
@@ -17,6 +19,14 @@ const router = new Router({
     path: '/login',
     name: 'login',
     component: login
+  }, {
+    path: '/personal',
+    name: 'personal',
+    component: personal
+  }, {
+    path: '/courseList',
+    name: 'courseList',
+    component: courseList
   }]
 });
 
@@ -24,7 +34,7 @@ const router = new Router({
 router.beforeEach((to, from, next) => {
   // 获取store里面的token
   let token = store.state.token;
-  store.commit('updateLoadingStatus', {
+  store.commit('UPDATELOADINGSTATUS', {
     isLoading: true
   })
 
@@ -46,7 +56,7 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-  store.commit('updateLoadingStatus', {
+  store.commit('UPDATELOADINGSTATUS', {
     isLoading: false
   })
 })

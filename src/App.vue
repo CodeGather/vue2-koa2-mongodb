@@ -16,7 +16,7 @@ export default {
   },
   computed: {
     ...mapState({
-      isLoading: state => state.vux.isLoading
+      isLoading: state => state.isLoading
     })
   }
 }

@@ -1,14 +1,14 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
-Vue.use(Vuex);
+Vue.use(Vuex)
 
 // 初始化时用sessionStore.getItem('token'),这样子刷新页面就无需重新登录
 
 const state = {
-  token: window.sessionStorage.getItem('token'),
-  username: '',
-  isLoading: false
+  token: window.sessionStorage.getItem('token'), // 获取token
+  username: '', // 用户名初始值
+  isLoading: false // 页面切换显示loading
 };
 
 const mutations = {
@@ -27,7 +27,7 @@ const mutations = {
     state.username = data;
     window.sessionStorage.setItem('username', data);
   },
-  updateLoadingStatus: (state, payload) => {
+  UPDATELOADINGSTATUS: (state, payload) => {
     state.isLoading = payload.isLoading
   }
 };

@@ -7,7 +7,7 @@
 #安装koa-generator
 npm install -g koa-generator
 
-#在当前文件夹下生成项目
+#先创建一个文件夹然后进入文件夹并在当前文件夹下生成项目
 koa2 .
 
 #安装依赖
@@ -22,11 +22,11 @@ pm2 start ./bin/www
 #报错信息解决办法
 ChromeDriver installation failed Error with http(s) request: Error: read ETIMEDOUT
 
-#再次执行
+#再次执行后台服务搭建完成
 npm install
 ```
 
-## Build Setup
+## 前台页面搭建步骤
 
 ``` bash
 # install dependencies
@@ -50,5 +50,3 @@ npm run e2e
 # run all tests
 npm test
 ```
-
-For a detailed explanation on how things work, check out the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
