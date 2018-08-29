@@ -11,8 +11,10 @@ const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'p
 
 const router = new Router({
   mode: 'history',
-  path: '/',
   routes: [{
+    path: '/',
+    redirect: '/home'
+  }, {
     path: '/home',
     name: 'home',
     component: home
@@ -33,18 +35,15 @@ const router = new Router({
 
 const history = window.sessionStorage;
 let historyCount = history.getItem('count') * 1;
-console.log(historyCount);
 // 注册全局钩子用来拦截导航
 router.beforeEach((to, from, next) => {
-  // 获取store里面的token
-  let token = store.state.token;
+  // 设置loading状态为显示
   store.commit('UPDATELOADINGSTATUS', {
     isLoading: true
   });
 
   const toIndex = history.getItem(to.path);
   const fromIndex = history.getItem(from.path);
-
   if (toIndex) {
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
       store.commit('UPDATE_DIRECTION', {
@@ -63,12 +62,14 @@ router.beforeEach((to, from, next) => {
       direction: 'forward'
     });
   }
+  // 获取store里面的token
+  let token = store.state.token;
   if (/\/http/.test(to.path)) {
     let url = to.path.split('http')[1];
+    console.log(url);
     window.location.href = `http${url}`;
-  }
-  // 判断要去的路由有没有requiresAuth
-  if (to.meta.requiresAuth) {
+  } else if (to.meta.requiresAuth) {
+    // 判断要去的路由有没有requiresAuth
     if (token) {
       next();
     } else {
@@ -85,8 +86,10 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-  store.commit('UPDATELOADINGSTATUS', {
-    isLoading: false
-  });
+  setTimeout(() => {
+    store.commit('UPDATELOADINGSTATUS', {
+      isLoading: false
+    });
+  }, 500);
 });
 export default router;

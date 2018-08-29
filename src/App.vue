@@ -1,9 +1,7 @@
 <template>
-  <div id="app" style="height:100%">
+  <div id="app">
     <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
-      <keep-alive>
-        <router-view class="router-view" ></router-view>
-      </keep-alive>
+      <router-view class="router-view" ></router-view>
     </transition>
     <foot-guide v-if="$route.name === 'home' || $route.name === 'courseList' ||  $route.name === 'personal'"></foot-guide>
     <loading v-model="isLoading"></loading>

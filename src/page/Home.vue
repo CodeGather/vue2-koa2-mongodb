@@ -1,5 +1,5 @@
 <template>
-  <div style="height:100%">
+  <div>
     <x-header slot="header" :left-options="{showBack: false}">首页</x-header>
     <swiper :list="demo05_list" auto height="180px" @on-index-change="demo05_onIndexChange"></swiper>
     <group>
@@ -17,7 +17,7 @@
 import { mapActions } from 'vuex'
 import { XHeader, Group, Cell, Swiper } from 'vux'
 import store from '../store'
-import { loginByUsername } from '@/utils/api'
+import { loginByUsername } from '@/config/api'
 
 export default {
   components: {

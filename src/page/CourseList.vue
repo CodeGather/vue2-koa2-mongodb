@@ -17,7 +17,7 @@
 import { mapActions } from 'vuex'
 import { XHeader, Group, Cell } from 'vux'
 import store from '../store'
-import { loginByUsername } from '@/utils/api'
+import { loginByUsername } from '@/config/api'
 import footGuide from './components/Footer.vue'
 
 export default {

@@ -16,7 +16,7 @@ import { mapActions } from 'vuex'
 import { Group, Cell } from 'vux'
 import { XHeader } from 'vux'
 // import { loginByUsername } from '@/utils/api'
-import axios from '@/utils/axios'
+import axios from '@/config/axios'
 
 export default {
   components: {

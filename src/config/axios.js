@@ -1,6 +1,6 @@
-import axios from 'axios'
-import store from '../store'
-import router from '../router'
+import axios from 'axios';
+import store from '../store';
+import router from '../router';
 
 // 创建axios实例
 var instance = axios.create({
@@ -32,13 +32,17 @@ instance.interceptors.response.use(
         case 401:
           store.dispatch('UserLogout'); // 可能是token过期，清除它
           router.replace({ // 跳转到登录页面
-            path: 'login',
+            path: '/login',
             query: {
               redirect: router.currentRoute.fullPath
             } // 将跳转的路由path作为参数，登录成功后跳转到该路由
           });
+          break;
         case 404:
           console.log('接口不存在！');
+          break;
+        default:
+          return;
       }
     }
     return Promise.reject(error.response);
@@ -54,9 +58,13 @@ export default {
   userSignIn(data) {
     return axios.post('/api/v1/userSignIn', data);
   },
+  // 退出登录
+  userSignOut() {
+    return instance.get('/api/v1/userSignOut');
+  },
   // 获取用户
   getUser() {
-    return instance.get('/api/v1/user');
+    return instance.get('/api/v1/getUser');
   },
   // 删除用户
   delUser(data) {
@@ -66,4 +74,4 @@ export default {
   getJson(data) {
     return instance.post('/api/v1/json', data);
   }
-}
+};

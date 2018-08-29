@@ -23,6 +23,7 @@ module.exports = {
     'generator-star-spacing': 0,
     // allow debugger during development
     'no-debugger': process.env.NODE_ENV === 'production' ? 2 : 0,
-    "semi": [2, "always"], //语句强制分号结尾
+    "semi": [2, "always"], // 语句强制分号结尾
+    "space-before-function-paren": [0, "always"], // 函数定义时括号前面要不要有空格
   }
 }

@@ -1,9 +1,10 @@
-import axios from 'axios'
+import axios from 'axios';
+
 export async function loginByUsername(username, password) {
   const data = {
     username,
     password
-  }
+  };
   return await axios({
     url: '/api/v1/json',
     method: 'get',
