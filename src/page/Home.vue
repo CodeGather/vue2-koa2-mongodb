@@ -1,52 +1,31 @@
 <template>
   <div style="height:100%">
-    <view-box>
-      <x-header slot="header" :left-options="{showBack: false}">首页</x-header>
-      <group>
-        <cell is-link title="Simple" link="/login"></cell>
-        <cell is-link :title="title" link="/component/tabbar-icon"></cell>
-      </group>
-      <div v-occupy="{ data: content, config }"></div>
-      <div v-occupy="{ data: content, config }"></div>
-      <div v-occupy="{ data: content, config }"></div>
-      <div v-occupy="{ data: content, config }"></div>
-      <router-view></router-view>
-      <tabbar>
-        <tabbar-item selected>
-          <img slot="icon" src="../assets/tab/icon_nav_button.png">
-          <span slot="label">Wechat</span>
-        </tabbar-item>
-        <tabbar-item show-dot>
-          <img slot="icon" src="../assets/tab/icon_nav_msg.png">
-          <span slot="label">Message</span>
-        </tabbar-item>
-        <tabbar-item link="/courseList">
-          <img slot="icon" src="../assets/tab/icon_nav_article.png">
-          <span slot="label">Explore</span>
-        </tabbar-item>
-        <tabbar-item badge="2" link="/personal">
-          <img slot="icon" src="../assets/tab/icon_nav_cell.png">
-          <span slot="label">News</span>
-        </tabbar-item>
-      </tabbar>
-    </view-box>
+    <x-header slot="header" :left-options="{showBack: false}">首页</x-header>
+    <group>
+      <cell is-link title="Simple" link="/login"></cell>
+      <cell is-link :title="title" link="/component/tabbar-icon"></cell>
+    </group>
+    <div v-occupy="{ data: content, config }"></div>
+    <div v-occupy="{ data: content, config }"></div>
+    <div v-occupy="{ data: content, config }"></div>
+    <div v-occupy="{ data: content, config }"></div>
+    <foot-guide></foot-guide>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
+import { XHeader, Group, Cell } from 'vux'
 import store from '../store'
-import { XHeader, Tabbar, TabbarItem, Group, Cell, ViewBox } from 'vux'
 import { loginByUsername } from '@/utils/api'
+import footGuide from './components/Footer.vue'
 
 export default {
   components: {
     XHeader,
-    Tabbar,
-    TabbarItem,
     Group,
     Cell,
-    ViewBox
+    footGuide
   },
   data () {
     return {

@@ -4,6 +4,7 @@
     "indent_size": 2,
     "indent_char": " ",
     "eol": "auto",
+    "semi": true,
     "preserve_newlines": true,
     "break_chained_methods": false,
     "max_preserve_newlines": 0,

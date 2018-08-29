@@ -1,7 +1,7 @@
-import Vue from 'vue'
-import Vuex from 'vuex'
+import Vue from 'vue';
+import Vuex from 'vuex';
 
-Vue.use(Vuex)
+Vue.use(Vuex);
 
 // 初始化时用sessionStore.getItem('token'),这样子刷新页面就无需重新登录
 
@@ -28,24 +28,24 @@ const mutations = {
     window.sessionStorage.setItem('username', data);
   },
   UPDATELOADINGSTATUS: (state, payload) => {
-    state.isLoading = payload.isLoading
+    state.isLoading = payload.isLoading;
   }
 };
 
 const actions = {
-  UserLogin({
+  UserLogin: ({
     commit
-  }, data) {
+  }, data) => {
     commit('LOGIN', data);
   },
-  UserLogout({
+  UserLogout: ({
     commit
-  }) {
+  }) => {
     commit('LOGOUT');
   },
-  UserName({
+  UserName: ({
     commit
-  }, data) {
+  }, data) => {
     commit('USERNAME', data);
   }
 };

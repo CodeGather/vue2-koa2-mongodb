@@ -1,18 +1,19 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import store from '../store/index'
+import Vue from 'vue';
+import Router from 'vue-router';
+import store from '../store/index';
 
-Vue.use(Router)
+Vue.use(Router);
 
-const home = r => require.ensure([], () => r(require('@/page/Home')), 'home')
-const login = r => require.ensure([], () => r(require('@/page/Login')), 'login')
-const courseList = r => require.ensure([], () => r(require('@/page/CourseList')), 'courseList')
-const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'personal')
+const home = r => require.ensure([], () => r(require('@/page/Home')), 'home');
+const login = r => require.ensure([], () => r(require('@/page/Login')), 'login');
+const courseList = r => require.ensure([], () => r(require('@/page/CourseList')), 'courseList');
+const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'personal');
 
 const router = new Router({
   mode: 'history',
+  path: '/',
   routes: [{
-    path: '/',
+    path: '/home',
     name: 'home',
     component: home
   }, {
@@ -36,7 +37,7 @@ router.beforeEach((to, from, next) => {
   let token = store.state.token;
   store.commit('UPDATELOADINGSTATUS', {
     isLoading: true
-  })
+  });
 
   // 判断要去的路由有没有requiresAuth
   if (to.meta.requiresAuth) {
@@ -58,6 +59,6 @@ router.beforeEach((to, from, next) => {
 router.afterEach((to) => {
   store.commit('UPDATELOADINGSTATUS', {
     isLoading: false
-  })
-})
+  });
+});
 export default router;
