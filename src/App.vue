@@ -1,6 +1,11 @@
 <template>
   <div id="app" style="height:100%">
-    <router-view></router-view>
+    <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
+      <keep-alive>
+        <router-view class="router-view" ></router-view>
+      </keep-alive>
+    </transition>
+    <foot-guide v-if="$route.name === 'home' || $route.name === 'courseList' ||  $route.name === 'personal'"></foot-guide>
     <loading v-model="isLoading"></loading>
   </div>
 </template>
@@ -8,15 +13,18 @@
 <script>
 import { Loading } from 'vux'
 import { mapState } from 'vuex'
+import footGuide from '@/page/components/Footer'
 
 export default {
   name: 'app',
   components: {
-    Loading
+    Loading,
+    footGuide
   },
   computed: {
     ...mapState({
-      isLoading: state => state.isLoading
+      isLoading: state => state.isLoading,
+      direction: state => state.direction,
     })
   }
 }
@@ -30,5 +38,34 @@ html, body {
   width: 100%;
   overflow: hidden;
   background-color: #fbf9fe;
+}
+.vux-pop-out-enter-active,
+.vux-pop-out-leave-active,
+.vux-pop-in-enter-active,
+.vux-pop-in-leave-active {
+  will-change: transform;
+  transition: all 300ms;
+  height: 100%;
+  width: 100%;
+  top: 0;
+  position: absolute;
+  backface-visibility: hidden;
+  perspective: 1000;
+}
+.vux-pop-out-enter {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
+}
+.vux-pop-out-leave-active {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.vux-pop-in-enter {
+  opacity: 0;
+  transform: translate3d(100%, 0, 0);
+}
+.vux-pop-in-leave-active {
+  opacity: 0;
+  transform: translate3d(-100%, 0, 0);
 }
 </style>

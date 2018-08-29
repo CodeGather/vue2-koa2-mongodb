@@ -8,6 +8,7 @@ Vue.use(Vuex);
 const state = {
   token: window.sessionStorage.getItem('token'), // 获取token
   username: '', // 用户名初始值
+  direction: 'forward',
   isLoading: false // 页面切换显示loading
 };
 
@@ -28,7 +29,11 @@ const mutations = {
     window.sessionStorage.setItem('username', data);
   },
   UPDATELOADINGSTATUS: (state, payload) => {
+    // 更新loading显示状态
     state.isLoading = payload.isLoading;
+  },
+  UPDATE_DIRECTION: (state, payload) => {
+    state.direction = payload.direction;
   }
 };
 

@@ -1,20 +1,19 @@
 <template>
   <div id='foot_guide'>
-    {{$route.name}}
       <tabbar>
-        <tabbar-item :selected="$route.name.indexOf('home') >-1" link="/home">
+        <tabbar-item link="/home">
           <img slot="icon" src="@/assets/tab/icon_nav_button.png">
           <span slot="label">首页</span>
         </tabbar-item>
-        <tabbar-item :selected="$route.name.indexOf('login')>-1" show-dot>
+        <tabbar-item link="/login">
           <img slot="icon" src="@/assets/tab/icon_nav_msg.png">
           <span slot="label">Message</span>
         </tabbar-item>
-        <tabbar-item :selected="$route.name.indexOf('courseList') >-1" link="/courseList">
+        <tabbar-item link="/courseList">
           <img slot="icon" src="@/assets/tab/icon_nav_article.png">
           <span slot="label">课程</span>
         </tabbar-item>
-        <tabbar-item :selected="$route.name.indexOf('personal') > -1" badge="2" link="/personal">
+        <tabbar-item badge="2" link="/personal">
           <img slot="icon" src="@/assets/tab/icon_nav_cell.png">
           <span slot="label">我的</span>
         </tabbar-item>

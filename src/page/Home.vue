@@ -1,6 +1,7 @@
 <template>
   <div style="height:100%">
     <x-header slot="header" :left-options="{showBack: false}">首页</x-header>
+    <swiper :list="demo05_list" auto height="180px" @on-index-change="demo05_onIndexChange"></swiper>
     <group>
       <cell is-link title="Simple" link="/login"></cell>
       <cell is-link :title="title" link="/component/tabbar-icon"></cell>
@@ -9,29 +10,37 @@
     <div v-occupy="{ data: content, config }"></div>
     <div v-occupy="{ data: content, config }"></div>
     <div v-occupy="{ data: content, config }"></div>
-    <foot-guide></foot-guide>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell } from 'vux'
+import { XHeader, Group, Cell, Swiper } from 'vux'
 import store from '../store'
 import { loginByUsername } from '@/utils/api'
-import footGuide from './components/Footer.vue'
 
 export default {
   components: {
     XHeader,
     Group,
     Cell,
-    footGuide
+    Swiper
   },
   data () {
     return {
       msg: 'Hello World!',
       content: '',
       title:'',
+      demo05_list:[{
+        url: 'javascript:',
+        img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw1k2wj20p00goq7n.jpg',
+        title: '送你一辆车'
+      }, {
+        url: 'javascript:',
+        img: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg',
+        title: '送你一次旅行',
+        fallbackImg: 'https://ww1.sinaimg.cn/large/663d3650gy1fq66vw50iwj20ff0aaaci.jpg'
+      }],
       config: {
         width: '100%',
         height: '18px',
@@ -62,6 +71,9 @@ export default {
       this.Login(res.data);
 
       this.$router.push({ path: '/login' });
+    },
+    demo05_onIndexChange: ()=>{
+
     }
   }
 }

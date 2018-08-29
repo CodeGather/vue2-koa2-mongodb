@@ -31,6 +31,9 @@ const router = new Router({
   }]
 });
 
+const history = window.sessionStorage;
+let historyCount = history.getItem('count') * 1;
+console.log(historyCount);
 // 注册全局钩子用来拦截导航
 router.beforeEach((to, from, next) => {
   // 获取store里面的token
@@ -39,6 +42,31 @@ router.beforeEach((to, from, next) => {
     isLoading: true
   });
 
+  const toIndex = history.getItem(to.path);
+  const fromIndex = history.getItem(from.path);
+
+  if (toIndex) {
+    if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
+      store.commit('UPDATE_DIRECTION', {
+        direction: 'forward'
+      });
+    } else {
+      store.commit('UPDATE_DIRECTION', {
+        direction: 'reverse'
+      });
+    }
+  } else {
+    ++historyCount;
+    history.setItem('count', historyCount);
+    to.path !== '/' && history.setItem(to.path, historyCount);
+    store.commit('UPDATE_DIRECTION', {
+      direction: 'forward'
+    });
+  }
+  if (/\/http/.test(to.path)) {
+    let url = to.path.split('http')[1];
+    window.location.href = `http${url}`;
+  }
   // 判断要去的路由有没有requiresAuth
   if (to.meta.requiresAuth) {
     if (token) {

@@ -1,6 +1,6 @@
 <template>
   <div style="height:100%">
-    <x-header slot="header" :left-options="{showBack: false}">首页</x-header>
+    <x-header slot="header" :left-options="{showBack: false}">我的</x-header>
     <group>
       <cell is-link title="Simple" link="/login"></cell>
       <cell is-link :title="title" link="/component/tabbar-icon"></cell>
