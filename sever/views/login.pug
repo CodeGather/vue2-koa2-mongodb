@@ -1,0 +1,19 @@
+doctype html
+html
+	head
+		meta(charset='utf-8')
+		title Tianfer's Blog
+		include common/head.pug
+	body
+		include common/header.pug
+
+		div.content#content
+			el-row(:gutter='20')
+				el-col(:xs='24', :sm='16')
+
+				el-col(:xs='0', :sm='8')
+					div.right.display-none
+						div.demo 你好
+						br
+
+		include common/script.pug
