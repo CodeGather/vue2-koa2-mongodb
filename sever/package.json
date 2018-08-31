@@ -29,6 +29,7 @@
     "request": "^2.88.0",
     "request-promise": "^4.2.2",
     "sha1": "^1.1.1",
+    "uglify-js": "^3.4.8",
     "vuex": "^3.0.1",
     "xml2js": "^0.4.19"
   },
