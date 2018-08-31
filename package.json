@@ -18,6 +18,7 @@
     "fastclick": "^1.0.6",
     "jsencrypt": "^3.0.0-rc.1",
     "jsonwebtoken": "^8.3.0",
+    "uglify-js": "^3.4.8",
     "vue": "^2.5.2",
     "vue-occupy": "0.0.9",
     "vue-router": "^3.0.1",
