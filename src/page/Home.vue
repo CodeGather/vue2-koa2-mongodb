@@ -50,6 +50,7 @@ export default {
     }
   },
   mounted(){
+    this.$alert()
     let url = 'http://127.0.0.1:8081/api/v1/userSignIn';
     fetch(url).then((result) => {
       console.log(result)

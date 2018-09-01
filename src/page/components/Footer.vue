@@ -1,20 +1,20 @@
 <template>
   <div id='foot_guide'>
       <tabbar>
-        <tabbar-item link="/home">
-          <img slot="icon" src="@/assets/tab/icon_nav_button.png">
+        <tabbar-item icon-class="iconfont icon-shouye" :selected="$route.name.indexOf('home') > -1" link="/home">
+          <span slot="icon" icon-class='iconfont icon-gerenzhongxin'></span>
           <span slot="label">首页</span>
         </tabbar-item>
-        <tabbar-item link="/login">
+        <!-- <tabbar-item link="/login">
           <img slot="icon" src="@/assets/tab/icon_nav_msg.png">
           <span slot="label">Message</span>
-        </tabbar-item>
-        <tabbar-item link="/courseList">
-          <img slot="icon" src="@/assets/tab/icon_nav_article.png">
+        </tabbar-item> -->
+        <!-- <tabbar-item link="/courseList">
+          <span slot="icon" icon-class='iconfont icon-gerenzhongxin'></span>
           <span slot="label">课程</span>
-        </tabbar-item>
-        <tabbar-item badge="2" link="/personal">
-          <img slot="icon" src="@/assets/tab/icon_nav_cell.png">
+        </tabbar-item> -->
+        <tabbar-item icon-class="iconfont icon-gerenzhongxin" :selected="$route.name.indexOf('personal') > -1" link="/personal">
+          <span slot="icon" icon-class='iconfont icon-gerenzhongxin'></span>
           <span slot="label">我的</span>
         </tabbar-item>
       </tabbar>
@@ -22,6 +22,7 @@
 </template>
 
 <script>
+import '@/assets/iconfont/iconfont.css'
 import { Tabbar, TabbarItem, Group, Cell } from 'vux'
 
 export default {
@@ -45,16 +46,16 @@ export default {
 }
 </script>
 
-<style lang="less">
-html, body {
-  height: 100%;
-  width: 100%;
-  background-color: #fbf9fe;
-}
-#foot_guide{
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-}
+<style lang="less" scoped>
+  html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #fbf9fe;
+  }
+  #foot_guide{
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+  }
 </style>
