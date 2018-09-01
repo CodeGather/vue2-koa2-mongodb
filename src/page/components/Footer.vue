@@ -22,7 +22,6 @@
 </template>
 
 <script>
-import '@/assets/iconfont/iconfont.css'
 import { Tabbar, TabbarItem, Group, Cell } from 'vux'
 
 export default {

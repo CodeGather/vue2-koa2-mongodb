@@ -30,6 +30,7 @@ export default {
 
 <style lang="less">
 @import '~vux/src/styles/reset.less';
+@import 'http://at.alicdn.com/t/font_818955_h1eeb8noefn.css';
 
 html, body {
   height: 100%;
