@@ -14,7 +14,7 @@ const state = {
   token: getStore('token'), // 获取token
   username: '', // 用户名初始值
   direction: 'forward',
-  isLoading: false,       // 页面切换显示loading
+  isLoading: false // 页面切换显示loading
 };
 
 const mutations = {

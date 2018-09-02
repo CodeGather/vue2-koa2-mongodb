@@ -1,31 +1,36 @@
 <template>
   <div style="height:100%">
     <x-header slot="header" :left-options="{showBack: false}">我的</x-header>
+    <flexbox>
+      <flexbox-item class="user-img" :span="4">
+        <img src="@/assets/vux_logo.png">
+      </flexbox-item>
+      <flexbox-item>
+        <div>王某某</div>
+      </flexbox-item>
+    </flexbox>
     <group>
-      <cell is-link title="关联学生" link="/login">
+      <cell is-link title="关联学生" :is-loading="!studentName" :value="studentName" link="/relation">
         <span slot="icon" class="iconfont icon-guanlian" style="margin-right:5px;"></span>
       </cell>
-      <cell is-link title="我的课表" link="/login">
+      <cell is-link title="我的课表" link="/curriculum">
         <span slot="icon" class="iconfont icon-kecheng" style="margin-right:5px;"></span>
       </cell>
-      <cell is-link title="作业表现" link="/login">
+      <cell is-link title="作业表现" link="/evaluate">
         <span slot="icon" class="iconfont icon-zuoye" style="margin-right:5px;"></span>
       </cell>
-      <cell is-link title="已参加课程" link="/login">
+      <cell is-link title="已参加课程" link="/participated">
         <span slot="icon" class="iconfont icon-kecheng2" style="margin-right:5px;"></span>
       </cell>
     </group>
-    <div v-occupy="{ data: content, config }"></div>
-    <div v-occupy="{ data: content, config }"></div>
-    <div v-occupy="{ data: content, config }"></div>
-    <div v-occupy="{ data: content, config }" class="iconfont icon-gerenzhongxin"></div>
+    <!-- <div v-occupy="{ data: content, config }"></div> -->
     <foot-guide></foot-guide>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell } from 'vux'
+import { XHeader, Group, Cell, Flexbox, FlexboxItem } from 'vux'
 import store from '../store'
 import { loginByUsername } from '@/config/api'
 import footGuide from './components/Footer.vue'
@@ -35,6 +40,8 @@ export default {
     XHeader,
     Group,
     Cell,
+    Flexbox, 
+    FlexboxItem,
     footGuide
   },
   data () {
@@ -42,6 +49,7 @@ export default {
       msg: 'Hello World!',
       content: '',
       title:'',
+      studentName: '',
       config: {
         width: '100%',
         height: '18px',
@@ -58,6 +66,7 @@ export default {
         this.$store.dispatch('UserName', result.url);
         this.title = result.url
         this.content = result.url
+        this.studentName = '王某某'
       },2000)
     })
     // this.$http.get('/api/v1/json').then((data)=>{
@@ -78,9 +87,16 @@ export default {
 </script>
 
 <style lang="less">
-html, body {
-  height: 100%;
-  width: 100%;
-  background-color: #fbf9fe;
-}
+  html, body {
+    height: 100%;
+    width: 100%;
+    background-color: #fbf9fe;
+  }
+  .user-img{
+    padding: 20px 15px 0;
+    box-sizing: border-box;
+    & img{
+      width: 100%;
+    }
+  }
 </style>

@@ -8,6 +8,10 @@ const home = r => require.ensure([], () => r(require('@/page/Home')), 'home');
 const login = r => require.ensure([], () => r(require('@/page/Login')), 'login');
 const courseList = r => require.ensure([], () => r(require('@/page/CourseList')), 'courseList');
 const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'personal');
+const relation = r => require.ensure([], () => r(require('@/page/Relation')), 'relation');
+const evaluate = r => require.ensure([], () => r(require('@/page/Evaluate')), 'evaluate');
+const curriculum = r => require.ensure([], () => r(require('@/page/Curriculum')), 'curriculum');
+const participated = r => require.ensure([], () => r(require('@/page/Participated')), 'participated');
 
 const router = new Router({
   mode: 'history',
@@ -16,18 +20,58 @@ const router = new Router({
     redirect: '/home'
   }, {
     path: '/home',
+    meta: {
+      title: '首页'
+    },
     name: 'home',
     component: home
   }, {
     path: '/login',
+    meta: {
+      title: '登录'
+    },
     name: 'login',
     component: login
   }, {
     path: '/personal',
+    meta: {
+      title: '我的'
+    },
     name: 'personal',
     component: personal
   }, {
+    path: '/relation',
+    meta: {
+      title: '关联学生'
+    },
+    name: 'relation',
+    component: relation
+  }, {
+    path: '/curriculum',
+    meta: {
+      title: '我的课表'
+    },
+    name: 'curriculum',
+    component: curriculum
+  }, {
+    path: '/evaluate',
+    meta: {
+      title: '作业表现'
+    },
+    name: 'evaluate',
+    component: evaluate
+  }, {
+    path: '/participated',
+    meta: {
+      title: '已参加课程'
+    },
+    name: 'participated',
+    component: participated
+  }, {
     path: '/courseList',
+    meta: {
+      title: '课程列表'
+    },
     name: 'courseList',
     component: courseList
   }]
@@ -41,7 +85,6 @@ router.beforeEach((to, from, next) => {
   store.commit('UPDATELOADINGSTATUS', {
     isLoading: true
   });
-
   const toIndex = history.getItem(to.path);
   const fromIndex = history.getItem(from.path);
   if (toIndex) {
@@ -86,10 +129,12 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
+  console.log(to);
+  document.title = to.meta.title;
   setTimeout(() => {
     store.commit('UPDATELOADINGSTATUS', {
       isLoading: false
     });
-  }, 500);
+  }, 300);
 });
 export default router;
