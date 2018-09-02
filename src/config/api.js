@@ -7,7 +7,7 @@ export async function loginByUsername(username, password) {
   };
   return await axios({
     url: '/api/v1/json',
-    method: 'get',
+    method: 'post',
     data
   })
 }

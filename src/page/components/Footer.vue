@@ -9,10 +9,10 @@
           <img slot="icon" src="@/assets/tab/icon_nav_msg.png">
           <span slot="label">Message</span>
         </tabbar-item> -->
-        <!-- <tabbar-item link="/courseList">
+        <tabbar-item link="/classifyList">
           <span slot="icon" icon-class='iconfont icon-gerenzhongxin'></span>
-          <span slot="label">课程</span>
-        </tabbar-item> -->
+          <span slot="label">分类</span>
+        </tabbar-item>
         <tabbar-item icon-class="iconfont icon-gerenzhongxin" :selected="$route.name.indexOf('personal') > -1" link="/personal">
           <span slot="icon" icon-class='iconfont icon-gerenzhongxin'></span>
           <span slot="label">我的</span>

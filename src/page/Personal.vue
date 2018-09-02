@@ -3,10 +3,10 @@
     <x-header slot="header" :left-options="{showBack: false}">我的</x-header>
     <flexbox>
       <flexbox-item class="user-img" :span="4">
-        <img src="@/assets/vux_logo.png">
+        <img v-initi="{ data: src, config: {width: '100px',height: '100px',borderRadius: '50%'}}">
       </flexbox-item>
       <flexbox-item>
-        <div>王某某</div>
+        <div v-initi="{ data: content, config: {width: '80%',height: '24px'}}"></div>
       </flexbox-item>
     </flexbox>
     <group>
@@ -20,9 +20,13 @@
         <span slot="icon" class="iconfont icon-zuoye" style="margin-right:5px;"></span>
       </cell>
       <cell is-link title="已参加课程" link="/participated">
+      
         <span slot="icon" class="iconfont icon-kecheng2" style="margin-right:5px;"></span>
       </cell>
     </group>
+    <box gap="20px 15px">
+      <x-button type="primary" :show-loading="isLoading" @click.native="loginOut">退出登录</x-button>
+    </box>
     <!-- <div v-occupy="{ data: content, config }"></div> -->
     <foot-guide></foot-guide>
   </div>
@@ -30,43 +34,41 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell, Flexbox, FlexboxItem } from 'vux'
+import { XHeader, Group, Cell, Box, XButton, Flexbox, FlexboxItem } from 'vux'
 import store from '../store'
-import { loginByUsername } from '@/config/api'
+import axios from '@/config/axios'
 import footGuide from './components/Footer.vue'
+import { setTimeout } from 'timers';
 
 export default {
   components: {
     XHeader,
     Group,
     Cell,
+    Box,
+    XButton,
     Flexbox, 
     FlexboxItem,
     footGuide
   },
   data () {
     return {
-      msg: 'Hello World!',
+      isLoading: false,
       content: '',
       title:'',
-      studentName: '',
-      config: {
-        width: '100%',
-        height: '18px',
-        background: 'rgb(194, 207, 214)',
-        'background-image': 'linear-gradient(90deg,rgba(255, 255, 255, 0.15) 25%, transparent 25%)',
-      }
+      src:'',
+      studentName: ''
     }
   },
   mounted(){
     let url = 'http://127.0.0.1:8081/api/v1/userSignIn';
     fetch(url).then((result) => {
-      console.log(result)
       setTimeout(()=>{
         this.$store.dispatch('UserName', result.url);
         this.title = result.url
         this.content = result.url
         this.studentName = '王某某'
+        this.src = 'https://www.baidu.com/img/baidu_jgylogo3.gif'
       },2000)
     })
     // this.$http.get('/api/v1/json').then((data)=>{
@@ -75,12 +77,20 @@ export default {
   },
   methods: {
     ...mapActions(['Login']),
-    async handLogin() {
+    async loginOut(data) {
       this.loading = true;
-      const res = await loginByUsername(1313, 165262302);
-      this.Login(res.data);
-
-      this.$router.push({ path: '/login' });
+      axios.userSignOut({userName:'admin'}).then(({ data }) => {
+        // console.log(data)
+        if (data.msgCode===200) {
+          this.$toast({
+            text: data.msg
+          })
+          this.$store.dispatch('UserLogout');
+          setTimeout(()=>{
+            this.$router.push({ path: '/home' });
+          },1000)
+        }
+      });
     }
   }
 }

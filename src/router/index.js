@@ -6,6 +6,7 @@ Vue.use(Router);
 
 const home = r => require.ensure([], () => r(require('@/page/Home')), 'home');
 const login = r => require.ensure([], () => r(require('@/page/Login')), 'login');
+const classifyList = r => require.ensure([], () => r(require('@/page/ClassifyList')), 'classifyList');
 const courseList = r => require.ensure([], () => r(require('@/page/CourseList')), 'courseList');
 const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'personal');
 const relation = r => require.ensure([], () => r(require('@/page/Relation')), 'relation');
@@ -33,9 +34,17 @@ const router = new Router({
     name: 'login',
     component: login
   }, {
+    path: '/classifyList',
+    meta: {
+      title: '登录'
+    },
+    name: 'classifyList',
+    component: classifyList
+  }, {
     path: '/personal',
     meta: {
-      title: '我的'
+      title: '我的',
+      requiresAuth: true
     },
     name: 'personal',
     component: personal
@@ -107,11 +116,8 @@ router.beforeEach((to, from, next) => {
   }
   // 获取store里面的token
   let token = store.state.token;
-  if (/\/http/.test(to.path)) {
-    let url = to.path.split('http')[1];
-    console.log(url);
-    window.location.href = `http${url}`;
-  } else if (to.meta.requiresAuth) {
+  if (to.meta.requiresAuth) {
+    console.log(to);
     // 判断要去的路由有没有requiresAuth
     if (token) {
       next();
@@ -129,7 +135,6 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-  console.log(to);
   document.title = to.meta.title;
   setTimeout(() => {
     store.commit('UPDATELOADINGSTATUS', {
