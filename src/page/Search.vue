@@ -1,8 +1,7 @@
 <template>
   <div>
-    <x-header slot="header">课程分类</x-header>
-    <div class="head" @click="goSearch">
-      <span class="mask"></span>
+    <x-header slot="header">课程搜索</x-header>
+    <div class="head">
       <search :disabled="true" :auto-fixed="false"></search>
     </div>
   </div>
@@ -46,14 +45,5 @@ export default {
 <style lang="less">
 .head{
   position: relative;
-  & .mask {
-    position:absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    bottom: 0;
-    background-color: transparent;
-    z-index: 5;
-  }
 }
 </style>

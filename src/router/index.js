@@ -6,6 +6,7 @@ Vue.use(Router);
 
 const home = r => require.ensure([], () => r(require('@/page/Home')), 'home');
 const login = r => require.ensure([], () => r(require('@/page/Login')), 'login');
+const search = r => require.ensure([], () => r(require('@/page/Search')), 'search');
 const classifyList = r => require.ensure([], () => r(require('@/page/ClassifyList')), 'classifyList');
 const courseList = r => require.ensure([], () => r(require('@/page/CourseList')), 'courseList');
 const personal = r => require.ensure([], () => r(require('@/page/Personal')), 'personal');
@@ -33,6 +34,13 @@ const router = new Router({
     },
     name: 'login',
     component: login
+  }, {
+    path: '/search',
+    meta: {
+      title: '搜索'
+    },
+    name: 'search',
+    component: search
   }, {
     path: '/classifyList',
     meta: {
