@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header slot="header">用户登录</x-header>
+    <x-header slot="header">关联学生</x-header>
     <div class="vux-demo" @click="handLogin">
       <img class="logo" src="../assets/vux_logo.png">
       <h1> </h1>
