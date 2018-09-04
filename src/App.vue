@@ -32,12 +32,15 @@ export default {
 @import '~vux/src/styles/reset.less';
 @import 'http://at.alicdn.com/t/font_818955_n4x5auy4vpo.css';
 // @import './assets/iconfont/iconfont.css';
-
+@header-background-color:#e0793e;
 html, body {
   height: 100%;
   width: 100%;
-  overflow: hidden;
+  // overflow: hidden;
   background-color: #fbf9fe;
+}
+.weui-btn_primary{
+  background-color: @header-background-color!important;
 }
 .vux-pop-out-enter-active,
 .vux-pop-out-leave-active,

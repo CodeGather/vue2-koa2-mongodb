@@ -1,28 +1,35 @@
 <template>
   <div>
-    <x-header slot="header">关联学生</x-header>
+    <x-header slot="header">用户登录</x-header>
     <div class="vux-demo" @click="handLogin">
       <img class="logo" src="../assets/vux_logo.png">
       <h1> </h1>
     </div>
-    <group title="cell demo">
-      <cell title="VUX" value="cool" is-link></cell>
+    <group label-width="4.5em" label-margin-right="2em" label-align="right">
+      <x-input title="账号" type="text"  placeholder="必填" v-model="userName"></x-input>
+      <x-input title="密码" type="password" placeholder="必填" v-model="passWord"></x-input>
     </group>
+    <box gap="10px 10px">
+      <x-button type="primary" :show-loading="isLoading" @click.native="handLogin">登录</x-button>
+    </box>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell } from 'vux'
-import { XHeader } from 'vux'
+import { XHeader, XInput, XButton, Group, Cell, Box } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
+import { setTimeout } from 'timers';
 
 export default {
   components: {
     XHeader,
+    XInput,
+    XButton,
     Group,
-    Cell
+    Cell,
+    Box
   },
   data () {
     return {
@@ -31,10 +38,12 @@ export default {
       // preserves its current state and we are modifying
       // its initial state.
       msg: 'Hello World!',
+      userName: '',
+      passWord: '',
+      isLoading: false,
       ruleForm: {
         userName: 'admin',
         password: '123456',
-        checkPass: '',
       }
     }
   },
@@ -45,27 +54,19 @@ export default {
   },
   methods: {
     handLogin() {
+      this.isLoading = true;
       axios.userSignIn(this.ruleForm).then(({ data }) => {
-        // 账号不存在
-        if (data.info === false) {
-          this.$message({
-            type: 'info',
-            message: '账号不存在'
-          });
-          return;
-        }
-        if (data.success) {
-          this.$message({
-            type: 'success',
-            message: '登录成功'
-          });
+        console.log(data)
+        if (data.msgCode===200) {
+          this.$toast({
+            text: data.msg
+          })
           // 拿到返回的token和username，并存到store
-          let token = data.token;
-          let username = data.username;
-          this.$store.dispatch('UserLogin', token);
-          this.$store.dispatch('UserName', username);
+          this.$store.dispatch('UserLogin', this.ruleForm.userName);
           // 跳到目标页
-          this.$router.push('HelloWorld');
+          setTimeout(()=>{
+            this.$router.push(this.$route.query.redirect);
+          },800)
         }
       });
     }

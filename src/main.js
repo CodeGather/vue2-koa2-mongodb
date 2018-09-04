@@ -1,10 +1,16 @@
 import Vue from 'vue';
+import Message from './store/message';
 import router from './router/index';
 import VueIniti from 'vue-initi';
 import FastClick from 'fastclick';
 import store from './store';
-import Message from './store/message';
 import App from './App';
+import {
+  WechatPlugin
+} from 'vux';
+
+Vue.use(WechatPlugin);
+console.log(Vue.wechat); // 可以直接访问 wx 对象。
 
 Vue.use(Message); // 消息集中管理
 Vue.use(VueIniti);
