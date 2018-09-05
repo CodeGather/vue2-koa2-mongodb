@@ -3,7 +3,7 @@
     <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
       <router-view class="router-view" ></router-view>
     </transition>
-    <foot-guide v-if="$route.name === 'home' || $route.name === 'courseList' ||  $route.name === 'personal'"></foot-guide>
+    <!-- <foot-guide v-if="$route.name === 'home' || $route.name === 'courseList' ||  $route.name === 'personal'"></foot-guide> -->
     <loading v-model="isLoading"></loading>
   </div>
 </template>
@@ -36,7 +36,7 @@ export default {
 html, body {
   height: 100%;
   width: 100%;
-  // overflow: hidden;
+  overflow: scroll;
   background-color: #fbf9fe;
 }
 .weui-btn_primary{

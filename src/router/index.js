@@ -105,11 +105,12 @@ router.beforeEach((to, from, next) => {
   const toIndex = history.getItem(to.path);
   const fromIndex = history.getItem(from.path);
   if (toIndex) {
+    // 判断是否是新增页面
     if (!fromIndex || parseInt(toIndex, 10) > parseInt(fromIndex, 10) || (toIndex === '0' && fromIndex === '0')) {
       store.commit('UPDATE_DIRECTION', {
         direction: 'forward'
       });
-    } else {
+    } else { // 否则为后退就添加后退动画
       store.commit('UPDATE_DIRECTION', {
         direction: 'reverse'
       });
@@ -130,12 +131,109 @@ router.beforeEach((to, from, next) => {
     if (token) {
       next();
     } else {
-      next({
-        path: '/login',
-        query: {
-          redirect: to.fullPath
-        } // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由
+      // 授权分享
+      this.shareUrl = window.location.href.split('#')[0];
+      share(this.shareUrl).then(resolved => {
+        console.log(resolved);
+        Vue.wechat.config({
+          debug: false,
+          appId: resolved.data.appid,
+          timestamp: resolved.data.timestamp,
+          nonceStr: resolved.data.nonceStr,
+          signature: resolved.data.signature,
+          jsApiList: ['onMenuShareTimeline', 'onMenuShareAppMessage', 'onMenuShareQQ', 'onMenuShareWeibo', 'onMenuShareQZone'] // 必填，需要使用的JS接口列表，所有JS接口列表见附录2
+        });
       });
+
+      // config信息验证后会执行ready方法，所有接口调用都必须在config接口获得结果之后，config是一个客户端的异步操作，所以如果需要在 页面加载时就调用相关接口，则须把相关接口放在ready函数中调用来确保正确执行。对于用户触发时才调用的接口，则可以直接调用，不需要放在ready 函数中。  
+      Vue.wechat.ready(function() {
+        // 获取分享到朋友圈按钮点击状态及自定义分享内容接口  
+        Vue.wechat.onMenuShareTimeline({
+          title: '一直淘商城', // 分享标题    
+          link: this.shareUrl,
+          imgUrl: 'https://celefix.oss-cn-hangzhou.aliyuncs.com/test/20171009172744770.jpg', // 分享图标  
+          success: function(res) {
+            // 用户确认分享后执行的回调函数
+            alert("分享成功");
+          },
+          cancel: function(res) {
+            // 用户取消分享后执行的回调函数
+            alert("取消分享");
+          }
+        });
+
+        // 获取分享给朋友按钮点击状态及自定义分享内容接口  
+        Vue.wechat.onMenuShareAppMessage({
+          title: '一直淘商城', // 分享标题  
+          desc: this.goodsName, // 分享描述  
+          link: this.shareUrl,
+          imgUrl: 'https://celefix.oss-cn-hangzhou.aliyuncs.com/test/20171009172744770.jpg', // 分享图标  
+          type: 'link', // 分享类型,music、video或link，不填默认为link  
+          success: function(res) {
+            // 用户确认分享后执行的回调函数
+            alert("分享成功");
+          },
+          cancel: function(res) {
+            // 用户取消分享后执行的回调函数
+            alert("取消分享");
+          }
+        });
+
+        // 获取分享到QQ按钮点击状态及自定义分享内容接口  
+        Vue.wechat.onMenuShareQQ({
+          title: '一直淘商城', // 分享标题  
+          desc: this.goodsName, // 分享描述  
+          link: this.shareUrl, // 分享链接  
+          imgUrl: 'https://celefix.oss-cn-hangzhou.aliyuncs.com/test/20171009172744770.jpg', // 分享图标  
+          success: function(res) {
+            // 用户确认分享后执行的回调函数
+            alert("分享成功");
+          },
+          cancel: function(res) {
+            // 用户取消分享后执行的回调函数
+            alert("取消分享");
+          }
+        });
+
+        // 获取分享到腾讯微博按钮点击状态及自定义分享内容接口  
+        Vue.wechat.onMenuShareWeibo({
+          title: '一直淘商城', // 分享标题  
+          desc: this.goodsName, // 分享描述  
+          link: this.shareUrl, // 分享链接  
+          imgUrl: 'https://celefix.oss-cn-hangzhou.aliyuncs.com/test/20171009172744770.jpg', // 分享图标  
+          success: function(res) {
+            // 用户确认分享后执行的回调函数
+            alert("分享成功");
+          },
+          cancel: function(res) {
+            // 用户取消分享后执行的回调函数
+            alert("取消分享");
+          }
+        });
+
+        // 获取分享到QQ空间按钮点击状态及自定义分享内容接口  
+        Vue.wechat.onMenuShareQZone({
+          title: '一直淘商城', // 分享标题  
+          desc: this.goodsName, // 分享描述  
+          link: this.shareUrl, // 分享链接  
+          imgUrl: 'https://celefix.oss-cn-hangzhou.aliyuncs.com/test/20171009172744770.jpg', // 分享图标  
+          success: function(res) {
+            // 用户确认分享后执行的回调函数
+            alert("分享成功");
+          },
+          cancel: function(res) {
+            // 用户取消分享后执行的回调函数
+            alert("取消分享");
+          }
+        });
+      });
+
+      // next({
+      //   path: '/login',
+      //   query: {
+      //     redirect: to.fullPath
+      //   } // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由
+      // });
     }
   } else {
     next(); // 如果无需token,那么随它去吧
@@ -143,8 +241,8 @@ router.beforeEach((to, from, next) => {
 });
 
 router.afterEach((to) => {
-  document.title = to.meta.title;
-  setTimeout(() => {
+  document.title = to.meta.title; // 修改页面标题
+  setTimeout(() => { // 页面跳转完成后关闭loading框
     store.commit('UPDATELOADINGSTATUS', {
       isLoading: false
     });

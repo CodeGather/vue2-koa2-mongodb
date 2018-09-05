@@ -1,12 +1,12 @@
 <template>
   <div style="height:100%">
-    <x-header slot="header" :left-options="{showBack: false}">我的</x-header>
+    <!-- <x-header slot="header" :left-options="{showBack: false}">我的</x-header> -->
     <flexbox>
       <flexbox-item class="user-img" :span="4">
         <img v-initi="{ data: src, config: {width: '100px',height: '100px',borderRadius: '50%'}}">
       </flexbox-item>
       <flexbox-item>
-        <div v-initi="{ data: content, config: {width: '80%',height: '24px'}}"></div>
+        <div v-initi="{ data: content, config: {width: '80%',height: '24px',overflow: 'hidden', textOverflow: 'ellipsis'}}"></div>
       </flexbox-item>
     </flexbox>
     <group>
