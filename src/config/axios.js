@@ -50,8 +50,8 @@ instance.interceptors.response.use(
 
 export default {
   // 用户注册
-  userRegister(data) {
-    return instance.post('/api/v1/register', data)
+  userSignUp(data) {
+    return instance.post('/api/v1/userSignUp', data)
   },
   // 用户登录
   userSignIn(data) {

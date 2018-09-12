@@ -55,7 +55,7 @@ export default {
   methods: {
     handLogin() {
       this.isLoading = true;
-      axios.userSignIn(this.ruleForm).then(({ data }) => {
+      axios.userSignUp(this.ruleForm).then(({ data }) => {
         console.log(data)
         if (data.msgCode===200) {
           this.$toast({

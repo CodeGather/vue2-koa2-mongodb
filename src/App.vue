@@ -36,7 +36,7 @@ export default {
 html, body {
   height: 100%;
   width: 100%;
-  overflow: scroll;
+  // overflow: scroll;
   background-color: #fbf9fe;
 }
 .weui-btn_primary{

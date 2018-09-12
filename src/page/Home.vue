@@ -35,10 +35,10 @@
             <x-img src="https://o5omsejde.qnssl.com/demo/test8.jpg"></x-img>
           </div>
         </flexbox-item>
-        <flexbox-item><div class="feature">特技一</div></flexbox-item>
-        <flexbox-item><div class="feature">特技二</div></flexbox-item>
-        <flexbox-item><div class="feature">特技三</div></flexbox-item>
-        <flexbox-item><div class="feature">特技四</div></flexbox-item>
+        <flexbox-item class="item"><div class="feature">特技一</div></flexbox-item>
+        <flexbox-item class="item"><div class="feature">特技二</div></flexbox-item>
+        <flexbox-item class="item"><div class="feature">特技三</div></flexbox-item>
+        <flexbox-item class="item"><div class="feature">特技四</div><div class="feature-foot">特技四</div></flexbox-item>
       </flexbox>
     </box>
     <box class="foot-flex">
@@ -110,8 +110,24 @@ html, body {
   color: #e0793e;
   font-weight: bold;
 }
+.vux-divider{
+  margin-bottom: 25px;
+}
+.item{
+  position: relative;
+  border: 1px solid #ccc;
+}
 .feature{
   text-align: center;
+}
+.feature-foot{
+  position: absolute;
+  top: 100%;
+  width: 100%;
+  top: 0;
+  left: 0;
+  border: 1px solid red;
+  transform: rotateX(30deg)
 }
 .foot-flex{
   position: fixed;
