@@ -15,6 +15,7 @@
   },
   "dependencies": {
     "crypto-js": "^3.1.9-1",
+    "es6-promise": "^4.2.5",
     "fastclick": "^1.0.6",
     "jsencrypt": "^3.0.0-rc.1",
     "jsonwebtoken": "^8.3.0",

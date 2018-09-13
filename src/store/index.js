@@ -14,7 +14,16 @@ const state = {
   token: getStore('token'), // 获取token
   username: '', // 用户名初始值
   direction: 'forward',
-  isLoading: false // 页面切换显示loading
+  isLoading: false, // 页面切换显示loading
+  isWechat: function() {
+    var ua = navigator.userAgent.toLowerCase();
+    // console.log(ua.match(/MicroMessenger/i));
+    if (ua.indexOf('micromessenger') < 0) {
+      return true;
+    } else {
+      return false;
+    }
+  }
 };
 
 const mutations = {

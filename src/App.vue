@@ -39,6 +39,9 @@ html, body {
   // overflow: scroll;
   background-color: #fbf9fe;
 }
+li{
+  list-style-type: none;
+}
 .weui-btn_primary{
   background-color: @header-background-color!important;
 }

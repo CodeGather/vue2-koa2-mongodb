@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header slot="header">用户登录</x-header>
+    <x-header slot="header" v-if="this.$store.state.isWechat()">用户登录</x-header>
     <div class="vux-demo" @click="handLogin">
       <img class="logo" src="../assets/vux_logo.png">
       <h1> </h1>

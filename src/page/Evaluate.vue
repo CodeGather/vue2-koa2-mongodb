@@ -1,20 +1,25 @@
 <template>
   <div>
-    <x-header slot="header">作业表现</x-header>
-    <div class="vux-demo" @click="handLogin">
-      <img class="logo" src="../assets/vux_logo.png">
-      <h1> </h1>
-    </div>
-    <group title="cell demo">
-      <cell title="VUX" value="cool" is-link></cell>
+    <x-header slot="header" v-if="this.$store.state.isWechat()">作业表现</x-header>
+    <group>
+      <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
     </group>
+      
+    <section class="list-data">
+      <ul>
+        <li class="item">
+          <div>学习科目：<span>数学</span></div>
+          <div>学习时间：<span>2018-09-06 18:00</span></div>
+          <div>课堂表现：<span>在某个领域是强项、但缺乏一点积极性</span></div>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell } from 'vux'
-import { XHeader } from 'vux'
+import { XHeader, Group, Cell, PopupPicker, Search } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
@@ -22,15 +27,15 @@ export default {
   components: {
     XHeader,
     Group,
-    Cell
+    Cell,
+    PopupPicker,
+    Search
   },
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello World!',
+      title2: '帅选条件',
+      value2: ['数学', '2018年09月'],
+      list2: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你'], ['小米1', 'iPhone2', '华为3', '情怀4', '三星5', '其他6', '不告诉你7']],
       ruleForm: {
         userName: 'admin',
         password: '123456',
@@ -42,6 +47,7 @@ export default {
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
+    console.log(this.$store.state.isWechat())
   },
   methods: {
     handLogin() {
@@ -73,12 +79,13 @@ export default {
 }
 </script>
 
-<style>
-.vux-demo {
-  text-align: center;
-}
-.logo {
-  width: 100px;
-  height: 100px
+<style  lang="less">
+.list-data{
+  padding: 10px 15px;
+  & .item{
+    border: 1px solid #ccc;
+    border-radius:10px;
+    padding: 10px;
+  }
 }
 </style>

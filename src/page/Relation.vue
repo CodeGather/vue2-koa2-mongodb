@@ -1,12 +1,12 @@
 <template>
   <div>
-    <!-- <x-header slot="header">关联学生</x-header> -->
+    <x-header slot="header" v-if="this.$store.state.isWechat()">关联学生</x-header>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
       <x-input title="账号" type="text"  placeholder="必填" v-model="userName"></x-input>
       <x-input title="密码" type="password" placeholder="必填" v-model="passWord"></x-input>
     </group>
     <box gap="10px 10px">
-      <x-button type="primary" :show-loading="isLoading" @click.native="handLogin">关联</x-button>
+      <x-button type="primary" :show-loading="isLoading" :disabled="isLoading" @click.native="handLogin">关联</x-button>
     </box>
   </div>
 </template>
@@ -29,11 +29,6 @@ export default {
   },
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello World!',
       userName: '',
       passWord: '',
       isLoading: false,
@@ -50,7 +45,9 @@ export default {
   },
   methods: {
     handLogin() {
+      if( !(this.userName && this.passWord) ){ return this.$toast({ text: '姓名或学号不能为空' })}
       this.isLoading = true;
+      this.$confirm()
       axios.userSignIn(this.ruleForm).then(({ data }) => {
         console.log(data)
         if (data.msgCode===200) {

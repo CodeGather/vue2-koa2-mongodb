@@ -1,6 +1,6 @@
 <template>
   <div>
-    <!-- <x-header slot="header" :left-options="{showBack: false}">致英教育</x-header> -->
+    <x-header slot="header" :left-options="{showBack: false}" v-if="this.$store.state.isWechat()">致英教育</x-header>
     <swiper :list="ad_list" auto height="180px" @on-index-change="ad_onIndexChange"></swiper>
     <box gap="10px 10px 80px">
       <div class="title">致英教育</div>
@@ -31,7 +31,7 @@
       <divider>严格的选拔和培养体系</divider>
       <flexbox orient="vertical">
         <flexbox-item>
-          <div class="feature">
+          <div class="feature tutor">
             <x-img src="https://o5omsejde.qnssl.com/demo/test8.jpg"></x-img>
           </div>
         </flexbox-item>
@@ -119,6 +119,10 @@ html, body {
 }
 .feature{
   text-align: center;
+}
+.tutor img{
+  height: 210px;
+  width: 100%;
 }
 .feature-foot{
   position: absolute;

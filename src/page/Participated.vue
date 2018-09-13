@@ -1,20 +1,25 @@
 <template>
   <div>
-    <x-header slot="header">已参加课程</x-header>
-    <div class="vux-demo" @click="handLogin">
-      <img class="logo" src="../assets/vux_logo.png">
-      <h1> </h1>
-    </div>
-    <group title="cell demo">
-      <cell title="VUX" value="cool" is-link></cell>
+    <x-header slot="header" v-if="this.$store.state.isWechat()">已参加课程</x-header>
+    <group title="double columns">
+      <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
     </group>
+    {{this.$store.state.isWechat()}}
+    <section>
+      <ul>
+        <li class="item">
+          <div>学习科目：<span>数学</span></div>
+          <div>学习时间：<span>2018-09-06 18:00</span></div>
+          <div>课堂表现：<span>在某个领域是强项、但缺乏一点积极性</span></div>
+        </li>
+      </ul>
+    </section>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell } from 'vux'
-import { XHeader } from 'vux'
+import { XHeader, Group, Cell, PopupPicker } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
@@ -22,15 +27,14 @@ export default {
   components: {
     XHeader,
     Group,
-    Cell
+    Cell,
+    PopupPicker
   },
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello World!',
+      title2: '详细机型',
+      value2: ['iPhone', '华为3'],
+      list2: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你'], ['小米1', 'iPhone2', '华为3', '情怀4', '三星5', '其他6', '不告诉你7']],
       ruleForm: {
         userName: 'admin',
         password: '123456',
@@ -42,6 +46,7 @@ export default {
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
+    console.log(this.$store.state.isWechat())
   },
   methods: {
     handLogin() {

@@ -1,6 +1,6 @@
 <template>
   <div>
-    <x-header slot="header">课程分类</x-header>
+    <x-header slot="header" v-if="this.$store.state.isWechat()">课程分类</x-header>
     <div class="head" @click="goSearch">
       <span class="mask"></span>
       <search :disabled="true" :auto-fixed="false"></search>
