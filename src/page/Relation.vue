@@ -1,16 +1,12 @@
 <template>
   <div>
-    <x-header slot="header">关联学生</x-header>
-    <div class="vux-demo" @click="handLogin">
-      <img class="logo" src="../assets/vux_logo.png">
-      <h1> </h1>
-    </div>
+    <!-- <x-header slot="header">关联学生</x-header> -->
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
       <x-input title="账号" type="text"  placeholder="必填" v-model="userName"></x-input>
       <x-input title="密码" type="password" placeholder="必填" v-model="passWord"></x-input>
     </group>
     <box gap="10px 10px">
-      <x-button type="primary" :show-loading="isLoading" @click.native="handLogin">登录</x-button>
+      <x-button type="primary" :show-loading="isLoading" @click.native="handLogin">关联</x-button>
     </box>
   </div>
 </template>
@@ -75,11 +71,4 @@ export default {
 </script>
 
 <style>
-.vux-demo {
-  text-align: center;
-}
-.logo {
-  width: 100px;
-  height: 100px
-}
 </style>

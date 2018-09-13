@@ -25,7 +25,7 @@
       </cell>
     </group>
     <box gap="20px 15px">
-      <x-button type="primary" :show-loading="isLoading" @click.native="loginOut">退出登录</x-button>
+      <x-button type="primary" :show-loading="isLoading" @click.native="loginOut">登录</x-button>
     </box>
     <!-- <div v-occupy="{ data: content, config }"></div> -->
     <foot-guide></foot-guide>
