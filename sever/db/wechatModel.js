@@ -8,6 +8,7 @@ const Promise = require('bluebird');
 const request = Promise.promisify(require('request'));
 const config = require('../wechat/config');
 const db = require('./util');
+const mongoose = require('mongoose');
 
 const jwt = require('jsonwebtoken')
 const jwtKoa = require('koa-jwt')
@@ -53,19 +54,11 @@ const api = {
       if(shaData===reqData.signature){
         let wxCrypt = new WXBizDataCrypt(config.wechatSmall.appId, bodyData.rd_session);
         let data = wxCrypt.decryptData(reqData.encryptedData , reqData.iv);
-        let name = data.openId;
-        let password = data.nickName;
-        let results = await db.find({name})
-        let nickName= data.nickName;
-        let gender= data.gender;
-        let country= data.country;
-        let city= data.city;
-        let province= data.province;
-        let avatarUrl= data.avatarUrl;
-        let unionId= data.unionId;
-        let oauth = 0;
+        let results = await db.find('use', {openId: data.openId});
+		    data.createTime = new Date().getTime();
+        data.oauth = 0;
         let userToken = {
-          name: name
+          name: data.openId
         }
         let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
         if (results.length > 0) {
@@ -77,7 +70,7 @@ const api = {
             }
           }
         } else {
-          results = await db.insert({name, password, nickName, gender, country, city, province, avatarUrl, unionId, oauth})
+          results = await db.insert('use', data)
           if (results) {
             ctx.body = {
               status: 200,
@@ -88,6 +81,11 @@ const api = {
             }
           }
         }
+      }else{
+        ctx.body = {
+          status: 201,
+          msg: '登录失败！',
+        }
       }
     },
      /**
@@ -96,43 +94,270 @@ const api = {
      */
     async saveCase(ctx) {
       let bodyData = ctx.request.body
-      let reqData = bodyData.result;
-      console.log(bodyData)
-      /*if(shaData===reqData.signature){
-      let wxCrypt = new WXBizDataCrypt(config.wechatSmall.appId, bodyData.rd_session);
-      let data = wxCrypt.decryptData(reqData.encryptedData , reqData.iv);
-      let name = data.openId;
-      let password = data.nickName;
-      let results = await db.find({name})
-      let nickName= data.nickName;
-      let gender= data.gender;
-      let country= data.country;
-      let city= data.city;
-      let province= data.province;
-      let avatarUrl= data.avatarUrl;
-      let unionId= data.unionId;
-      let oauth = 0;
-      ctx.body = '注册失败'
+      let results = await db.find('food', {cookName: bodyData.cookName});
+      let times = new Date().getTime();
+      bodyData.createTime = times;
+      bodyData.uploadTime =  times;
       if (results.length > 0) {
-          ctx.body = '用户名已被注册'
+		  ctx.body = {
+			status: 200,
+			msg: '已存在相同菜谱',
+			data: {
+			  id: results[0]._id
+			}
+		  }
       } else {
-          results = await db.foodInsert({name, password, nickName, gender, country, city, province, avatarUrl, unionId, oauth})
-          console.log(results)
+		  results = await db.insert('food', bodyData)
           if (results) {
-              ctx.body = '注册成功'
+			  ctx.body = {
+				status: 200,
+				msg: '恭喜您，添加成功',
+				data: {
+				  id: results._id
+				}
+			  }
+          } else {
+			  ctx.body = {
+				status: 200,
+				msg: '系统错误'
+			  }
+		  }
+      }
+    },
+     /**
+     * 创建分类
+     * @param {context} ctx 
+     */
+    async saveSorts(ctx) {
+      let bodyData = ctx.request.body;
+      let times = new Date().getTime();
+      if(bodyData.hasOwnProperty('isEdit')){
+        bodyData.uploadTime =  times;
+        var results = await db.upData('sorts', {'_id':mongoose.Types.ObjectId(bodyData._id)}, {$set: bodyData});
+        if(results){
+          ctx.body = {
+            status: 200,
+            msg: '修改成功'
           }
+        } else {
+          ctx.body = {
+            status: 201,
+            msg: '修改失败'
+          }
+        }
+      } else {
+        if(!bodyData.iswitch){
+          if(bodyData.hasOwnProperty('_id')){
+            var results = await db.find('sorts', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+            var children = {
+              sortName: bodyData.sortName,
+              createTime: times,
+              sortDesc: bodyData.sortDesc
+            }
+            results = await db.upData('sorts', {'_id':mongoose.Types.ObjectId(bodyData._id)}, {$push:{'children':children}});
+            ctx.body = {
+              status: 200,
+              msg: '新增成功'
+            }
+          }else{
+            ctx.body = {
+              status: 201,
+              msg: '请新增顶级分类'
+            }
+          }
+        }else{
+          results = await db.insert('sorts', bodyData); 
+          ctx.body = {
+            status: 200,
+            msg: '新增成功'
+          }
+        }
       }
-      let userToken = {
-        name: name
-      }
-      let token = jwt.sign(userToken, secret, {expiresIn: '1h'})
-      */
+    },
+     /**
+     * 查询分类
+     * @param {context} ctx 
+     */
+    async getSorts(ctx) {
+      let bodyData = ctx.request.body
+      let results = await db.find('sorts');
       ctx.body = {
         status: 200,
-//          data: {
-//            token: token, //返回token
-//            oauth: results[0].oauth
-//          }
+        msg: '操作成功',
+        data: results
+      }
+    },
+     /**
+     * 删除分类
+     * @param {context} ctx 
+     */
+    async delSorts(ctx) {
+      let bodyData = ctx.request.body;
+      let results = await db.find('sorts', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+      if(results.length>0){
+        results = await db.removeData('sorts', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+        ctx.body = {
+          status: 200,
+          msg: '删除成功'
+        } 
+      }else{ 
+	    ctx.body = {
+		  status: 201,
+		  msg: '删除失败'
+	    }
+      }
+    },
+     /**
+     * 创建口味
+     * @param {context} ctx 
+     */
+    async saveFlavor(ctx) {
+      let bodyData = ctx.request.body;
+      let results = await db.find('flavor', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+      let times = new Date().getTime();
+      if(results.length>0){
+        let obj = {
+          uploadTime: times,
+          flavorName: bodyData.flavorName
+        };
+        results = await db.upData('flavor', {'_id':mongoose.Types.ObjectId(bodyData._id)}, {$set: obj});
+        ctx.body = {
+          status: 200,
+          msg: '修改成功'
+        } 
+      }else{ 
+        results = await db.find('flavor', {flavorName: bodyData.flavorName});
+        if(results.length>0){
+          ctx.body = {
+            status: 200,
+            msg: '已存在'
+          }
+        } else {
+            bodyData.createTime= times,
+          results = await db.insert('flavor', bodyData); 
+          ctx.body = {
+            status: 200,
+            msg: '新增成功'
+          }
+        }
+      }
+    },
+     /**
+     * 查询口味
+     * @param {context} ctx 
+     */
+    async getFlavor(ctx) {
+      let bodyData = ctx.request.body
+      let results = await db.find('flavor');
+      ctx.body = {
+        status: 200,
+        msg: '操作成功',
+        data: results
+      }
+    },
+     /**
+     * 删除口味
+     * @param {context} ctx 
+     */
+    async delFlavor(ctx) {
+      let bodyData = ctx.request.body;
+      let results = await db.find('flavor', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+      if(results.length>0){
+        results = await db.removeData('flavor', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+        ctx.body = {
+          status: 200,
+          msg: '删除成功'
+        } 
+      }else{ 
+	    ctx.body = {
+		  status: 201,
+		  msg: '删除失败'
+	    }
+      }
+    },
+     /**
+     * 获取banners
+     * @param {context} ctx 
+     */
+    async getBroad(ctx) {
+      let bodyData = ctx.request.body;
+      let results = await db.find('food', bodyData);
+      if (results.length > 0) {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: results
+        }
+      } else {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: []
+        }
+      }
+    },
+     /**
+     * 获取菜谱列表
+     * @param {context} ctx 
+     */
+    async getMyCookList(ctx) {
+      let bodyData = ctx.request.body;
+      let results = await db.findPage('food', {}, bodyData.pageIndex);
+      if (results.length > 0) {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: results
+        }
+      } else {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: []
+        }
+      }
+    },
+     /**
+     * 获取菜谱详情
+     * @param {context} ctx 
+     */
+    async getDetail(ctx) {
+      let bodyData = ctx.request.body;
+      let results = await db.find('food', {'_id':mongoose.Types.ObjectId(bodyData._id)});
+      if (results.length > 0) {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: results
+        }
+      } else {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: []
+        }
+      }
+    },
+     /**
+     * 搜索菜谱并保持分页
+     * @param {context} ctx 
+     */
+    async searchFood(ctx) {
+      let bodyData = ctx.request.body;
+      let reg = new RegExp( `${bodyData.key}.*`);
+      let results = await db.findPage('food', {'cookName':{$regex:reg}}, bodyData.pageIndex);
+      if (results.length > 0) {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: results
+        }
+      } else {
+        ctx.body = {
+          status: 200,
+          msg: '获取成功',
+          data: []
+        }
       }
     },
     /**
@@ -140,9 +365,10 @@ const api = {
      * @param {context} ctx 
      */
     async upLoadImg(ctx) {
+	    let headers = ctx.req.headers;
       ctx.body = {
         status: 200,
-        filename: ctx.req.file.path //返回文件名
+        filename: headers['x-forwarded-proto'] +'://'+ headers['host'] +'/'+ ctx.req.file.path //返回文件名
       }
     },
     /**
@@ -174,8 +400,6 @@ const api = {
         const name = info.userName
         const password = info.password
         let results = await db.find({name, password})
-        console.log(name)
-        console.log(password)
         ctx.body = '登录失败'
         if (results.length > 0) {
             ctx.body = {

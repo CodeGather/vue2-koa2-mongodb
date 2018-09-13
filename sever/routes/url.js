@@ -11,6 +11,12 @@ var api = {
   // 授权免登用户登录
   authLogin: `${host}/api/v1/auth`,
 
+  // 新建菜谱
+  saveCase: `${host}/api/v1/saveCase`,
+
+  // 获取菜谱列表
+  getMyCookList: `${host}/api/v1/getMyCookList`,
+
   // 获取用户信息
   doOneData: `${host}/api/v1/getUserInfo`,
 
@@ -53,17 +59,11 @@ var api = {
   // 提交留言
   saveAdvice: `${host}/api/v1/saveAdvice`,
 
-  // 新建订单
-  saveCase: `${host}/api/v1/saveCase`,
-
   // 新建企业订单
   saveCaseByKey: `${host}/api/v1/saveCaseByKey`,
 
   // 搜索企业
   getSourceByKey: `${host}/api/v1/getSourceByKey`,
-
-  // 获取订单列表
-  getMyCaseList: `${host}/api/v1/getMyCaseList`,
 
   // 获取订单详情
   getCaseDetail: `${host}/api/v1/getCaseDetail`,

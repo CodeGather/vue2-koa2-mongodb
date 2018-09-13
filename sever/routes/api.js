@@ -29,9 +29,19 @@ router.get('/', async (ctx, next) => {
 router.get('/getOpenId', wx.getOpenId)
       .post('/auth', wx.auth)
       .post('/saveCase', wx.saveCase)
+      .post('/saveSorts', wx.saveSorts)     
+      .post('/getSorts', wx.getSorts) 
+      .post('/delSorts', wx.delSorts) 
+      .post('/saveFlavor', wx.saveFlavor)
+      .post('/getFlavor', wx.getFlavor)   
+      .post('/delFlavor', wx.delFlavor)    
+      .post('/getMyCookList', wx.getMyCookList)
+      .post('/getBroad', wx.getBroad)
+      .post('/getDetail', wx.getDetail)
+      .post('/searchFood', wx.searchFood)
+      .post('/uploadImg', upload.single('file'), wx.upLoadImg)
       .post('/userSignIn', wx.userSignIn)
       .post('/userSignUp', wx.userSignUp)
-      .post('/uploadImg', upload.single('file'), wx.upLoadImg)
 
 // 微信授权
 

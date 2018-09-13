@@ -11,6 +11,9 @@ const app = new Koa();
 const db = require('./db/db');
 const { port, dbUrl } = require('./db/config');
 
+const jwt = require('jsonwebtoken');
+const jwtKoa = require('koa-jwt');
+
 const index = require('./routes/index')
 const users = require('./routes/users')
 const api = require('./routes/api')
@@ -55,7 +58,7 @@ app.use(async (ctx, next) => {
       msg: message
     }
   }
-//    console.log(ctx)
+  console.log(ctx)
   console.log(`${ctx.method} ${ctx.url} - ${ms}ms`)
 })
 
