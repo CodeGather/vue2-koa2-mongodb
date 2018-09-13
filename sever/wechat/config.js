@@ -10,7 +10,11 @@ module.exports = {
     appSecret: '0f5e220b7465a92345635b6016d22fd4',
     encodingAESKey: '7leoh14eCgezhFU8PwnGvo6lYiPqQTK59n93iwI2e0l'
   },
-  prefix: 'https://api.weixin.qq.com/cgi-bin/token',
+  wechatSmall: {
+    appId: 'wx7a7934860d3eabf5',
+    appSecret: '1e2a17e416474df01888c611734b745b',
+  },
+  prefixHost: 'https://api.weixin.qq.com',
   getAccessToken: function(){
     return util.readFileAsync(wechat_file)
   },

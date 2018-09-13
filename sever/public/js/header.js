@@ -27,11 +27,11 @@ let signin = new Vue({
 					password: this.form.pass,
 					checked: this.form.checked,
 				}).then(function(res) {
-					if(res.data == '登录成功') {
+					if(res.msgCode === 200) {
 						location.reload()
 					} else {
 						$this.$message({
-							message: res.data,
+							message: res.msg,
 							type: 'warning',
 							showClose: true,
 							duration: 2000

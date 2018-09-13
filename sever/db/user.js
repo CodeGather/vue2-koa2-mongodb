@@ -2,7 +2,6 @@ const Promise = require('bluebird')
 const db = require('./util')
 
 const user = {
-
     /**
      * 处理注册逻辑
      * @param {context} ctx 
@@ -41,6 +40,31 @@ const user = {
         } else {
             ctx.body = '用户或密码错误'
         }
+    },
+    /**
+     * 处理登录逻辑
+     * @param {context} ctx
+     */
+    async userSignOut(ctx) {
+      const info = ctx.request.body
+      const name = info.userName
+      const password = info.password
+      let results = await db.find({name})
+      ctx.body = {
+        msg: '退出失败',
+        msgCode: 500
+      }
+      if (results.length > 0) {
+          ctx.body = {
+            msg: '退出成功',
+            msgCode: 200
+          }
+      } else {
+          results = await db.insert({name, password})
+          if (results) {
+              ctx.body = '注册成功'
+          }
+      }
     }
     
 }

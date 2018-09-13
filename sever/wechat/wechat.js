@@ -7,7 +7,7 @@ const request = Promise.promisify(require('request'))
 const config = require('../wechat/config')
 
 const api = {
-  accessToken: config.prefix+'?grant_type=client_credential'
+  accessToken: config.prefixHost+'/cgi-bin/token?grant_type=client_credential'
 }
 
 

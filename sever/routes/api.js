@@ -1,36 +1,38 @@
-const router = require('koa-router')()
-const user = require('../db/user')
+const util = require('../utils/util');
+const router = require('koa-router')();
+const wx = require('../db/wechatModel');
+const multer = require('koa-multer');//加载koa-multer模块
+
+//文件上传配置
+var storage = multer.diskStorage({
+  //文件保存路径
+  destination: function (req, file, cb) {
+    cb(null, util.checkDirExist('public/upload/'))
+  },
+  //修改文件名称
+  filename: function (req, file, cb) {
+    var fileFormat = (file.originalname).split(".");
+    cb(null,Date.now() + "." + fileFormat[fileFormat.length - 1]);
+  }
+})
+//加载配置
+var upload = multer({ storage: storage });
 
 router.prefix('/api/v1')
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index', {
-    title: 'Hello Koa 2 api1!'
+    title: '您是否来错地方了呢！'
   })
 })
 
-router.get('/user', async (ctx, next) => {
-  console.log(ctx)
-  ctx.body = 'koa2 string api12'
-})
+router.get('/getOpenId', wx.getOpenId)
+      .post('/auth', wx.auth)
+      .post('/saveCase', wx.saveCase)
+      .post('/userSignIn', wx.userSignIn)
+      .post('/userSignUp', wx.userSignUp)
+      .post('/uploadImg', upload.single('file'), wx.upLoadImg)
 
-router.get('/json', async (ctx, next) => {
-  ctx.body = {
-    title: 'koa2 json api1'
-  }
-})
-
-router.post('/userSignUp', user.userSignUp).post('/userSignIn', user.userSignIn)
-
-router.get('/login', async (ctx, next) => {
-    //查询所有用户信息
-    let doc = await findAllUsers();
-    ctx.status = 200;
-    ctx.body = {
-      succsess: '成功',
-      result: doc
-    };
-})
 // 微信授权
 
 /*router.get('/wx', async (ctx, next) => {
