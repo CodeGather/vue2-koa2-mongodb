@@ -14,7 +14,6 @@
 <script>
 import { mapActions } from 'vuex'
 import { Group, Cell } from 'vux'
-import store from '../store'
 import { loginByUsername } from '@/config/api'
 
 export default {

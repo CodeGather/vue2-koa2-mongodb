@@ -49,7 +49,6 @@
 <script>
 import { mapActions } from 'vuex'
 import { Flexbox, FlexboxItem, Swiper, Divider, XImg, Box, XButton, ViewBox } from 'vux'
-import store from '../store'
 import { loginByUsername } from '@/config/api'
 
 export default {

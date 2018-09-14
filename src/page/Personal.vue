@@ -32,7 +32,6 @@
 <script>
 import { mapActions } from 'vuex'
 import { Group, Cell, Box, XButton, Flexbox, FlexboxItem } from 'vux'
-import store from '../store'
 import axios from '@/config/axios'
 
 export default {
