@@ -18,8 +18,7 @@ let webpackConfig = {
     path: config.build.assetsRoot,
     filename: '[name].js',
     publicPath: process.env.NODE_ENV === 'production' ?
-      config.build.assetsPublicPath :
-      config.dev.assetsPublicPath
+      config.build.assetsPublicPath : config.dev.assetsPublicPath
   },
   resolve: {
     extensions: ['.js', '.vue', '.json'],
@@ -93,6 +92,9 @@ module.exports = vuxLoader.merge(webpackConfig, {
           }
         }
       }
+    }, { /* 自定义全局主题 */
+      name: 'less-theme',
+      path: 'src/style/vux_theme.less'
     }
   ]
 })

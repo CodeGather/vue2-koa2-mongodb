@@ -1,17 +1,14 @@
 <template>
   <div>
     <x-header slot="header" v-if="this.$store.state.isWechat()">已参加课程</x-header>
-    <group title="double columns">
-      <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
-    </group>
-    {{this.$store.state.isWechat()}}
-    <section>
+    <section class="list-data">
       <ul>
-        <li class="item">
-          <div>学习科目：<span>数学</span></div>
-          <div>学习时间：<span>2018-09-06 18:00</span></div>
-          <div>课堂表现：<span>在某个领域是强项、但缺乏一点积极性</span></div>
+        <li class="item" v-for="(item,index) in listData" :key="index">
+          <div>学习科目：<span>{{item.name}}</span></div>
+          <div>学习时间：<span>{{item.time}}</span></div>
+          <div>课堂表现：<span>{{item.desc}}</span></div>
         </li>
+        <li><load-more v-if="listData.length===0" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more></li>
       </ul>
     </section>
   </div>
@@ -19,22 +16,25 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell, PopupPicker } from 'vux'
+import { XHeader, Group, Cell, PopupPicker, LoadMore } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
+import { setTimeout } from 'timers';
 
 export default {
   components: {
     XHeader,
     Group,
     Cell,
-    PopupPicker
+    PopupPicker, 
+    LoadMore
   },
   data () {
     return {
       title2: '详细机型',
       value2: ['iPhone', '华为3'],
       list2: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你'], ['小米1', 'iPhone2', '华为3', '情怀4', '三星5', '其他6', '不告诉你7']],
+      listData: [],
       ruleForm: {
         userName: 'admin',
         password: '123456',
@@ -47,6 +47,17 @@ export default {
     //   console.log(data)
     // })
     console.log(this.$store.state.isWechat())
+    setTimeout(()=>{
+      this.listData = [{
+        name: '数学',
+        time: '2018年09月',
+        desc: '在某个领域是强项、但缺乏一点积极性',
+      },{
+        name: '数学',
+        time: '2018年09月',
+        desc: '在某个领域是强项、但缺乏一点积极性',
+      }]
+    },1000)
   },
   methods: {
     handLogin() {
@@ -79,11 +90,4 @@ export default {
 </script>
 
 <style>
-.vux-demo {
-  text-align: center;
-}
-.logo {
-  width: 100px;
-  height: 100px
-}
 </style>

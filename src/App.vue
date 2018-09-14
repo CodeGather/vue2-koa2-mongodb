@@ -1,15 +1,18 @@
 <template>
-  <div id="app">
+  <div id="app" style="height:100%">
+    <view-box ref="viewBox">
+      <x-header slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;" :left-options="{showBack: $route.name !== 'home' &&  $route.name !== 'personal'}" v-if="this.$store.state.isWechat()" :title="title"></x-header>
     <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
       <router-view class="router-view" ></router-view>
     </transition>
+    </view-box>
     <!-- <foot-guide v-if="$route.name === 'home' || $route.name === 'courseList' ||  $route.name === 'personal'"></foot-guide> -->
     <loading v-model="isLoading"></loading>
   </div>
 </template>
 
 <script>
-import { Loading } from 'vux'
+import { Loading, XHeader, ViewBox } from 'vux'
 import { mapState } from 'vuex'
 import footGuide from '@/page/components/Footer'
 
@@ -17,13 +20,18 @@ export default {
   name: 'app',
   components: {
     Loading,
+    XHeader,
+    ViewBox,
     footGuide
   },
   computed: {
     ...mapState({
       isLoading: state => state.isLoading,
       direction: state => state.direction,
-    })
+    }),
+    title () {
+      return this.$route.meta.title
+    }
   }
 }
 </script>
@@ -32,7 +40,6 @@ export default {
 @import '~vux/src/styles/reset.less';
 @import 'http://at.alicdn.com/t/font_818955_n4x5auy4vpo.css';
 // @import './assets/iconfont/iconfont.css';
-@header-background-color:#e0793e;
 html, body {
   height: 100%;
   width: 100%;
@@ -42,8 +49,14 @@ html, body {
 li{
   list-style-type: none;
 }
-.weui-btn_primary{
-  background-color: @header-background-color!important;
+.list-data{
+  padding: 10px 15px;
+  & .item{
+    border: 1px solid #ccc;
+    border-radius:10px;
+    padding: 10px;
+    margin-bottom: 10px;
+  }
 }
 .vux-pop-out-enter-active,
 .vux-pop-out-leave-active,

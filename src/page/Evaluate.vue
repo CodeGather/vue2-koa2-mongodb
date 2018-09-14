@@ -7,11 +7,12 @@
       
     <section class="list-data">
       <ul>
-        <li class="item">
-          <div>学习科目：<span>数学</span></div>
-          <div>学习时间：<span>2018-09-06 18:00</span></div>
-          <div>课堂表现：<span>在某个领域是强项、但缺乏一点积极性</span></div>
+        <li class="item" v-for="(item,index) in listData" :key="index">
+          <div>学习科目：<span>{{item.name}}</span></div>
+          <div>学习时间：<span>{{item.time}}</span></div>
+          <div>课堂表现：<span>{{item.desc}}</span></div>
         </li>
+        <li><load-more v-if="listData.length===0" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more></li>
       </ul>
     </section>
   </div>
@@ -19,7 +20,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell, PopupPicker, Search } from 'vux'
+import { XHeader, Group, Cell, PopupPicker, Search, LoadMore } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
@@ -29,13 +30,23 @@ export default {
     Group,
     Cell,
     PopupPicker,
-    Search
+    Search,
+    LoadMore
   },
   data () {
     return {
       title2: '帅选条件',
       value2: ['数学', '2018年09月'],
       list2: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你'], ['小米1', 'iPhone2', '华为3', '情怀4', '三星5', '其他6', '不告诉你7']],
+      listData: [{
+        name: '数学',
+        time: '2018年09月',
+        desc: '在某个领域是强项、但缺乏一点积极性',
+      },{
+        name: '数学',
+        time: '2018年09月',
+        desc: '在某个领域是强项、但缺乏一点积极性',
+      }],
       ruleForm: {
         userName: 'admin',
         password: '123456',
@@ -80,12 +91,4 @@ export default {
 </script>
 
 <style  lang="less">
-.list-data{
-  padding: 10px 15px;
-  & .item{
-    border: 1px solid #ccc;
-    border-radius:10px;
-    padding: 10px;
-  }
-}
 </style>
