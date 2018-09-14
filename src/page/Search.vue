@@ -1,6 +1,5 @@
 <template>
   <div>
-    <x-header slot="header" v-if="this.$store.state.isWechat()">课程搜索</x-header>
     <div class="head">
       <search :disabled="true" :auto-fixed="false"></search>
     </div>
@@ -9,14 +8,13 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Search, XInput, XButton, Group, Cell } from 'vux'
+import { Search, XInput, XButton, Group, Cell } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 import { setTimeout } from 'timers';
 
 export default {
   components: {
-    XHeader,
     XInput,
     Search,
     XButton,

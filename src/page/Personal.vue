@@ -1,6 +1,5 @@
 <template>
   <div style="height:100%">
-    <x-header slot="header" :left-options="{showBack: false}" v-if="this.$store.state.isWechat()">我的</x-header>
     <flexbox>
       <flexbox-item class="user-img" :span="4">
         <img v-initi="{ data: src, config: {width: '100px',height: '100px',borderRadius: '50%'}}">
@@ -25,16 +24,14 @@
       </cell>
     </group>
     <box gap="20px 15px">
-      <x-button type="primary" :show-loading="isLoading" @click.native="loginOut">登录</x-button>
+      <x-button type="primary" :show-loading="isLoading" @click.native="loginIn">登录</x-button>
     </box>
-    <!-- <div v-occupy="{ data: content, config }"></div> -->
-    <foot-guide></foot-guide>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell, Box, XButton, Flexbox, FlexboxItem } from 'vux'
+import { Group, Cell, Box, XButton, Flexbox, FlexboxItem } from 'vux'
 import store from '../store'
 import axios from '@/config/axios'
 import footGuide from './components/Footer.vue'
@@ -42,7 +39,6 @@ import { setTimeout } from 'timers';
 
 export default {
   components: {
-    XHeader,
     Group,
     Cell,
     Box,
@@ -61,25 +57,31 @@ export default {
     }
   },
   mounted(){
-    let url = 'http://127.0.0.1:8081/api/v1/userSignIn';
-    fetch(url).then((result) => {
-      setTimeout(()=>{
-        this.$store.dispatch('UserName', result.url);
-        this.title = result.url
-        this.content = result.url
-        this.studentName = '王某某'
-        this.src = 'https://www.baidu.com/img/baidu_jgylogo3.gif'
-      },2000)
-    })
+    // let url = 'http://127.0.0.1:8081/api/v1/userSignIn';
+    // fetch(url).then((result) => {
+    //   setTimeout(()=>{
+    //     this.$store.dispatch('UserName', result.url);
+    //     this.title = result.url
+    //     this.content = result.url
+    //     this.studentName = '王某某'
+    //     this.src = 'https://www.baidu.com/img/baidu_jgylogo3.gif'
+    //   },2000)
+    // })
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
+    axios.oauth({
+      redirectUrl: 'http://topping.mydrn.cn/home'
+    }).then(({ data }) => {
+       console.log(data)
+      
+    });
   },
   methods: {
     ...mapActions(['Login']),
-    async loginOut(data) {
+    async loginIn(data) {
       this.loading = true;
-      axios.userSignOut({userName:'admin'}).then(({ data }) => {
+      axios.userSignIn({userName:'admin'}).then(({ data }) => {
         // console.log(data)
         if (data.msgCode===200) {
           this.$toast({

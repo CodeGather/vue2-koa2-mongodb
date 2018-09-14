@@ -48,13 +48,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Flexbox, FlexboxItem, Swiper, Divider, XImg, Box, XButton, ViewBox } from 'vux'
+import { Flexbox, FlexboxItem, Swiper, Divider, XImg, Box, XButton, ViewBox } from 'vux'
 import store from '../store'
 import { loginByUsername } from '@/config/api'
 
 export default {
   components: {
-    XHeader,
     Flexbox, 
     FlexboxItem,
     Swiper,

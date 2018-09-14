@@ -17,6 +17,10 @@ const participated = r => require.ensure([], () => r(require('@/page/Participate
 
 const router = new Router({
   mode: 'history',
+  base: '/wechat/',
+  scorllBehavior: () => ({
+    y: 0
+  }),
   routes: [{
     path: '/',
     redirect: '/home'
@@ -51,36 +55,39 @@ const router = new Router({
   }, {
     path: '/personal',
     meta: {
-      title: '我的',
-      requiresAuth: true
+      title: '我的'
     },
     name: 'personal',
     component: personal
   }, {
     path: '/relation',
     meta: {
-      title: '关联学生'
+      title: '关联学生',
+      requiresAuth: true
     },
     name: 'relation',
     component: relation
   }, {
     path: '/curriculum',
     meta: {
-      title: '我的课表'
+      title: '我的课表',
+      requiresAuth: true
     },
     name: 'curriculum',
     component: curriculum
   }, {
     path: '/evaluate',
     meta: {
-      title: '作业表现'
+      title: '作业表现',
+      requiresAuth: true
     },
     name: 'evaluate',
     component: evaluate
   }, {
     path: '/participated',
     meta: {
-      title: '已参加课程'
+      title: '已参加课程',
+      requiresAuth: true
     },
     name: 'participated',
     component: participated
@@ -126,14 +133,19 @@ router.beforeEach((to, from, next) => {
   // 获取store里面的token
   let token = store.state.token;
   if (to.meta.requiresAuth) {
-    console.log(to);
     // 判断要去的路由有没有requiresAuth
     if (token) {
       next();
     } else {
-      // 授权分享
       this.shareUrl = window.location.href.split('#')[0];
-      share(this.shareUrl).then(resolved => {
+      next({
+        path: '/login',
+        query: {
+          redirect: from.fullPath
+        } // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由
+      });
+
+      /*share(this.shareUrl).then(resolved => {
         console.log(resolved);
         Vue.wechat.config({
           debug: false,
@@ -226,14 +238,7 @@ router.beforeEach((to, from, next) => {
             alert("取消分享");
           }
         });
-      });
-
-      // next({
-      //   path: '/login',
-      //   query: {
-      //     redirect: to.fullPath
-      //   } // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由
-      // });
+      });*/
     }
   } else {
     next(); // 如果无需token,那么随它去吧

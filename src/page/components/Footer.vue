@@ -1,6 +1,6 @@
 <template>
   <div id='foot_guide'>
-      <tabbar>
+      <tabbar slot="footer">
         <tabbar-item icon-class="iconfont icon-shouye" :selected="$route.name.indexOf('home') > -1" link="/home">
           <span slot="icon" icon-class='iconfont icon-gerenzhongxin'></span>
           <span slot="label">首页</span>
@@ -22,20 +22,15 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem, Group, Cell } from 'vux'
+import { Tabbar, TabbarItem } from 'vux'
 
 export default {
   components: {
     Tabbar,
-    TabbarItem,
-    Group,
-    Cell
+    TabbarItem
   },
   data () {
     return {
-      msg: 'Hello World!',
-      content: '',
-      title:'',
     }
   },
   mounted(){

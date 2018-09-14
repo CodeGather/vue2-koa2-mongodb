@@ -1,6 +1,5 @@
 <template>
   <div style="height:100%">
-    <x-header slot="header" :left-options="{showBack: false}" v-if="this.$store.state.isWechat()">课程列表</x-header>
     <group>
       <cell is-link title="Simple" link="/login"></cell>
       <cell is-link :title="title" link="/component/tabbar-icon"></cell>
@@ -15,14 +14,13 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell } from 'vux'
+import { Group, Cell } from 'vux'
 import store from '../store'
 import { loginByUsername } from '@/config/api'
 import footGuide from './components/Footer.vue'
 
 export default {
   components: {
-    XHeader,
     Group,
     Cell,
     footGuide

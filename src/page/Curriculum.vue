@@ -1,36 +1,28 @@
 <template>
   <div>
-    <x-header slot="header" v-if="this.$store.state.isWechat()">我的课程</x-header>
-    <div class="vux-demo" @click="handLogin">
-      <img class="logo" src="../assets/vux_logo.png">
-      <h1> </h1>
-    </div>
-    <group title="cell demo">
-      <cell title="VUX" value="cool" is-link></cell>
+    <group>
+      <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
     </group>
   </div>
 </template>
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell } from 'vux'
-import { XHeader } from 'vux'
+import { Group, Cell, PopupPicker } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
   components: {
-    XHeader,
     Group,
-    Cell
+    Cell,
+    PopupPicker
   },
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
-      msg: 'Hello World!',
+      title2: '帅选条件',
+      value2: ['数学', '2018-09'],
+      list2: [['语文', '数学', '英语', '物理', '化学', '地理', '生物', '历史', '政治'], ['2018-09', '2018-10', '2018-11', '2018-12', '2019-01', '2019-02', '2019-03']],
       ruleForm: {
         userName: 'admin',
         password: '123456',

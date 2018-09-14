@@ -1,12 +1,10 @@
 <template>
   <div>
-    <x-header slot="header" v-if="this.$store.state.isWechat()">已参加课程</x-header>
     <section class="list-data">
       <ul>
         <li class="item" v-for="(item,index) in listData" :key="index">
-          <div>学习科目：<span>{{item.name}}</span></div>
-          <div>学习时间：<span>{{item.time}}</span></div>
-          <div>课堂表现：<span>{{item.desc}}</span></div>
+          <div>报名课程：<span>{{item.name}}</span></div>
+          <div>报名时间：<span>{{item.time}}</span></div>
         </li>
         <li><load-more v-if="listData.length===0" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more></li>
       </ul>
@@ -16,14 +14,13 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell, PopupPicker, LoadMore } from 'vux'
+import { Group, Cell, PopupPicker, LoadMore } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 import { setTimeout } from 'timers';
 
 export default {
   components: {
-    XHeader,
     Group,
     Cell,
     PopupPicker, 
@@ -50,12 +47,10 @@ export default {
     setTimeout(()=>{
       this.listData = [{
         name: '数学',
-        time: '2018年09月',
-        desc: '在某个领域是强项、但缺乏一点积极性',
+        time: '2018-09-08',
       },{
-        name: '数学',
-        time: '2018年09月',
-        desc: '在某个领域是强项、但缺乏一点积极性',
+        name: '语文',
+        time: '2018-09-08',
       }]
     },1000)
   },

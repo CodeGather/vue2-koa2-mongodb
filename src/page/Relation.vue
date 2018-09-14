@@ -1,6 +1,5 @@
 <template>
   <div>
-    <x-header slot="header" v-if="this.$store.state.isWechat()">关联学生</x-header>
     <group label-width="4.5em" label-margin-right="2em" label-align="right">
       <x-input title="账号" type="text"  placeholder="必填" v-model="userName"></x-input>
       <x-input title="密码" type="password" placeholder="必填" v-model="passWord"></x-input>
@@ -13,14 +12,13 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, XInput, XButton, Group, Cell, Box } from 'vux'
+import { XInput, XButton, Group, Cell, Box } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 import { setTimeout } from 'timers';
 
 export default {
   components: {
-    XHeader,
     XInput,
     XButton,
     Group,

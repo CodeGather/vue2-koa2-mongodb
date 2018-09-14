@@ -1,6 +1,5 @@
 <template>
   <div>
-    <x-header slot="header" v-if="this.$store.state.isWechat()">用户登录</x-header>
     <div class="vux-demo" @click="handLogin">
       <img class="logo" src="../assets/vux_logo.png">
       <h1> </h1>
@@ -17,14 +16,13 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, XInput, XButton, Group, Cell, Box } from 'vux'
+import { XInput, XButton, Group, Cell, Box } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 import { setTimeout } from 'timers';
 
 export default {
   components: {
-    XHeader,
     XInput,
     XButton,
     Group,
@@ -55,7 +53,13 @@ export default {
   methods: {
     handLogin() {
       this.isLoading = true;
-      axios.userSignUp(this.ruleForm).then(({ data }) => {
+      // 拿到返回的token和username，并存到store
+      this.$store.dispatch('UserLogin', this.ruleForm.userName);
+      // 跳到目标页
+      setTimeout(()=>{
+        this.$router.push(this.$route.query.redirect);
+      },800)
+      /*axios.userSignUp(this.ruleForm).then(({ data }) => {
         console.log(data)
         if (data.msgCode===200) {
           this.$toast({
@@ -68,7 +72,7 @@ export default {
             this.$router.push(this.$route.query.redirect);
           },800)
         }
-      });
+      });*/
     }
   }
 }

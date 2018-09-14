@@ -1,29 +1,29 @@
-import axios from 'axios'
-import store from '../store'
-import router from '../router'
+import axios from 'axios';
+import store from '../store';
+import router from '../router';
 
 // 创建axios实例
 var instance = axios.create({
   timeout: 5000, // 请求超过5秒即超时返回错误
-  baseURL: 'http://127.0.0.1:8081',
+  baseURL: 'http://topping.mydrn.cn/zhiying/',
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
-})
+});
 
 // request拦截器
 instance.interceptors.request.use(function(config) {
   // Do something before request is sent
-  return config
+  return config;
 }, function(error) {
   // Do something with request error
-  return Promise.reject(error)
-})
+  return Promise.reject(error);
+});
 
 // respone拦截器
 instance.interceptors.response.use(
   response => {
-    return response
+    return response;
   },
   error => { // 默认除了2XX之外的都是错误的，就会走这里
     if (error.response) {
@@ -35,42 +35,42 @@ instance.interceptors.response.use(
             query: {
               redirect: router.currentRoute.fullPath
             } // 将跳转的路由path作为参数，登录成功后跳转到该路由
-          })
-          break
+          });
+          break;
         case 404:
-          console.log('接口不存在！')
-          break
+          console.log('接口不存在！');
+          break;
         default:
-          return
+          return;
       }
     }
-    return Promise.reject(error.response)
+    return Promise.reject(error.response);
   }
-)
+);
 
 export default {
-  // 用户注册
-  userSignUp(data) {
-    return instance.post('/api/v1/userSignUp', data)
+  // 用户授权
+  oauth(data) {
+    return instance.get('/public/wechat/oauth2.do', data);
   },
   // 用户登录
   userSignIn(data) {
-    return instance.post('/api/v1/userSignIn', data)
+    return instance.post('/f/wechat/auth2Login.do', data);
   },
-  // 退出登录
-  userSignOut(data) {
-    return instance.post('/api/v1/userSignOut', data)
+  // 查询学生接口
+  findStudent(data) {
+    return instance.post('/public/wechat/findStudentInfo.do', data);
   },
   // 获取用户
-  getUser() {
-    return instance.get('/api/v1/getUser')
+  bindStudent() {
+    return instance.post('/public/wechat/bindStudent.do');
   },
-  // 删除用户
-  delUser(data) {
-    return instance.post('/api/v1/delUser', data)
+  // 查询绑定学生
+  findBindStudent(data) {
+    return instance.post('/public/wechat/findBindStudent.do', data);
   },
   // 测试获取json
-  getJson(data) {
-    return instance.post('/api/v1/json', data)
+  findCurriculum(data) {
+    return instance.post('/public/wechat/findStudyCurriculum.do', data);
   }
-}
+};

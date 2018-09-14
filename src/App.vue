@@ -1,12 +1,12 @@
 <template>
-  <div id="app" style="height:100%">
-    <view-box ref="viewBox">
-      <x-header slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;" :left-options="{showBack: $route.name !== 'home' &&  $route.name !== 'personal'}" v-if="this.$store.state.isWechat()" :title="title"></x-header>
-    <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
-      <router-view class="router-view" ></router-view>
-    </transition>
+  <div style="height:100%">
+    <view-box ref="viewBox" :body-padding-top="isShowNav ? '46px' : '0'" body-padding-bottom="55px">
+      <x-header slot="header" style="width:100%;position:absolute;left:0;top:0;z-index:100;" :left-options="{showBack: $route.name !== 'home' &&  $route.name !== 'personal'}" v-if="isShowNav" :title="title"></x-header>
+      <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
+        <router-view class="router-view" ></router-view>
+      </transition>
+      <foot-guide v-if="isShowBer"></foot-guide>
     </view-box>
-    <!-- <foot-guide v-if="$route.name === 'home' || $route.name === 'courseList' ||  $route.name === 'personal'"></foot-guide> -->
     <loading v-model="isLoading"></loading>
   </div>
 </template>
@@ -17,7 +17,6 @@ import { mapState } from 'vuex'
 import footGuide from '@/page/components/Footer'
 
 export default {
-  name: 'app',
   components: {
     Loading,
     XHeader,
@@ -29,8 +28,20 @@ export default {
       isLoading: state => state.isLoading,
       direction: state => state.direction,
     }),
-    title () {
+    title () {    // 顶部导航标题
       return this.$route.meta.title
+    },
+    isShowNav(){  // 顶部导航
+      if(this.$store.state.isWechat()){
+        return true
+      }
+    },
+    isShowBer(){  // 底部导航
+      if(this.$route.name === 'courseList' ||  this.$route.name === 'personal'){
+        return true
+      } else {
+        return false
+      }
     }
   }
 }
@@ -66,7 +77,6 @@ li{
   transition: all 300ms;
   height: 100%;
   width: 100%;
-  top: 0;
   position: absolute;
   backface-visibility: hidden;
   perspective: 1000;

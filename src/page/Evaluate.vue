@@ -1,6 +1,5 @@
 <template>
   <div>
-    <x-header slot="header" v-if="this.$store.state.isWechat()">作业表现</x-header>
     <group>
       <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
     </group>
@@ -20,13 +19,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XHeader, Group, Cell, PopupPicker, Search, LoadMore } from 'vux'
+import { Group, Cell, PopupPicker, Search, LoadMore } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
   components: {
-    XHeader,
     Group,
     Cell,
     PopupPicker,
@@ -36,15 +34,15 @@ export default {
   data () {
     return {
       title2: '帅选条件',
-      value2: ['数学', '2018年09月'],
-      list2: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你'], ['小米1', 'iPhone2', '华为3', '情怀4', '三星5', '其他6', '不告诉你7']],
+      value2: ['数学', '2018-09'],
+      list2: [['语文', '数学', '英语', '物理', '化学', '地理', '生物', '历史', '政治'], ['2018-09', '2018-10', '2018-11', '2018-12', '2019-01', '2019-02', '2019-03']],
       listData: [{
         name: '数学',
-        time: '2018年09月',
+        time: '2018-09-09 18:56',
         desc: '在某个领域是强项、但缺乏一点积极性',
       },{
-        name: '数学',
-        time: '2018年09月',
+        name: '物理',
+        time: '2018-09-08 18:56',
         desc: '在某个领域是强项、但缺乏一点积极性',
       }],
       ruleForm: {

@@ -17,7 +17,6 @@ const state = {
   isLoading: false, // 页面切换显示loading
   isWechat: function() {
     var ua = navigator.userAgent.toLowerCase();
-    // console.log(ua.match(/MicroMessenger/i));
     if (ua.indexOf('micromessenger') < 0) {
       return true;
     } else {
