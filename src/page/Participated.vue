@@ -17,7 +17,6 @@ import { mapActions } from 'vuex'
 import { Group, Cell, PopupPicker, LoadMore } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
-import { setTimeout } from 'timers';
 
 export default {
   components: {

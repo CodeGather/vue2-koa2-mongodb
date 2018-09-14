@@ -34,8 +34,6 @@ import { mapActions } from 'vuex'
 import { Group, Cell, Box, XButton, Flexbox, FlexboxItem } from 'vux'
 import store from '../store'
 import axios from '@/config/axios'
-import footGuide from './components/Footer.vue'
-import { setTimeout } from 'timers';
 
 export default {
   components: {
@@ -44,8 +42,7 @@ export default {
     Box,
     XButton,
     Flexbox, 
-    FlexboxItem,
-    footGuide
+    FlexboxItem
   },
   data () {
     return {

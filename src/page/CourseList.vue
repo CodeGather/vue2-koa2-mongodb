@@ -8,7 +8,6 @@
     <div v-occupy="{ data: content, config }"></div>
     <div v-occupy="{ data: content, config }"></div>
     <div v-occupy="{ data: content, config }"></div>
-    <foot-guide></foot-guide>
   </div>
 </template>
 
@@ -17,7 +16,6 @@ import { mapActions } from 'vuex'
 import { Group, Cell } from 'vux'
 import store from '../store'
 import { loginByUsername } from '@/config/api'
-import footGuide from './components/Footer.vue'
 
 export default {
   components: {

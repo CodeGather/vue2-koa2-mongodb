@@ -15,7 +15,6 @@ import { mapActions } from 'vuex'
 import { XInput, XButton, Group, Cell, Box } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
-import { setTimeout } from 'timers';
 
 export default {
   components: {
