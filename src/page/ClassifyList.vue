@@ -9,18 +9,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { Search, XInput, XButton, Group, Cell } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
-  components: {
-    XInput,
-    Search,
-    XButton,
-    Group,
-    Cell
-  },
   data () {
     return {
       results: [],

@@ -14,17 +14,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell, PopupPicker, LoadMore } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
-  components: {
-    Group,
-    Cell,
-    PopupPicker, 
-    LoadMore
-  },
   data () {
     return {
       title2: '详细机型',

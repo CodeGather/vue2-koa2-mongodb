@@ -8,16 +8,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell, PopupPicker } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
-  components: {
-    Group,
-    Cell,
-    PopupPicker
-  },
   data () {
     return {
       title2: '帅选条件',

@@ -22,12 +22,9 @@
 </template>
 
 <script>
-import { Tabbar, TabbarItem } from 'vux'
 
 export default {
   components: {
-    Tabbar,
-    TabbarItem
   },
   data () {
     return {

@@ -13,15 +13,9 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { Group, Cell } from 'vux'
 import { loginByUsername } from '@/config/api'
 
 export default {
-  components: {
-    Group,
-    Cell,
-    footGuide
-  },
   data () {
     return {
       msg: 'Hello World!',

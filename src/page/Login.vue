@@ -16,24 +16,12 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XInput, XButton, Group, Cell, Box } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
-  components: {
-    XInput,
-    XButton,
-    Group,
-    Cell,
-    Box
-  },
   data () {
     return {
-      // note: changing this line won't causes changes
-      // with hot-reload because the reloaded component
-      // preserves its current state and we are modifying
-      // its initial state.
       msg: 'Hello World!',
       userName: '',
       passWord: '',

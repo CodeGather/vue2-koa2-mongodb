@@ -12,18 +12,10 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { XInput, XButton, Group, Cell, Box } from 'vux'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 
 export default {
-  components: {
-    XInput,
-    XButton,
-    Group,
-    Cell,
-    Box
-  },
   data () {
     return {
       userName: '',

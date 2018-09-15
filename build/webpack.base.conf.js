@@ -14,6 +14,7 @@ let webpackConfig = {
   entry: {
     app: './src/main.js'
   },
+  externals: {}, // 不进行打包的设置
   output: {
     path: config.build.assetsRoot,
     filename: '[name].js',
@@ -72,7 +73,6 @@ let webpackConfig = {
     ]
   }
 }
-
 
 module.exports = vuxLoader.merge(webpackConfig, {
   plugins: [
