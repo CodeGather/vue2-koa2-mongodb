@@ -12,15 +12,11 @@
 </template>
 
 <script>
-import { Loading, XHeader, ViewBox } from 'vux'
 import { mapState } from 'vuex'
 import footGuide from '@/page/components/Footer'
 
 export default {
   components: {
-    Loading,
-    XHeader,
-    ViewBox,
     footGuide
   },
   computed: {

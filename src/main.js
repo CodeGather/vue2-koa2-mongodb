@@ -6,6 +6,8 @@ import FastClick from 'fastclick';
 import store from './store';
 import App from './App';
 import {
+  Loading,
+  XHeader,
   Group,
   Cell,
   PopupPicker,
@@ -27,6 +29,8 @@ import {
 // Vue.use(WechatPlugin);
 // console.log(Vue.wechat); // 可以直接访问 wx 对象。
 
+Vue.component(Loading.name, Loading);
+Vue.component(XHeader.name, XHeader);
 Vue.component(Group.name, Group);
 Vue.component(Cell.name, Cell);
 Vue.component(PopupPicker.name, PopupPicker);
