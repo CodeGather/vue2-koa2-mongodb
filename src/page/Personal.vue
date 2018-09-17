@@ -12,9 +12,9 @@
       <cell is-link title="关联学生" :is-loading="!studentName" :value="studentName" link="/relation">
         <span slot="icon" class="iconfont icon-guanlian" style="margin-right:5px;"></span>
       </cell>
-      <cell is-link title="我的课表" link="/curriculum">
+      <!-- <cell is-link title="我的课表" link="/curriculum">
         <span slot="icon" class="iconfont icon-kecheng" style="margin-right:5px;"></span>
-      </cell>
+      </cell> -->
       <cell is-link title="作业表现" link="/evaluate">
         <span slot="icon" class="iconfont icon-zuoye" style="margin-right:5px;"></span>
       </cell>
