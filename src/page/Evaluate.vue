@@ -1,7 +1,7 @@
 <template>
   <div>
     <group>
-      <popup-picker :title="title2" :data="list2" v-model="value2"></popup-picker>
+      <popup-picker :title="title2" :data="list2" v-model="value2" @on-change="findStudyCurriculum"></popup-picker>
     </group>
       
     <section class="list-data">
@@ -51,6 +51,32 @@ export default {
     console.log(this.$store.state.isWechat())
   },
   methods: {
+    findStudyCurriculum(e){
+      console.log(e)
+      axios.findCurriculum(this.ruleForm).then(({ data }) => {
+        // 账号不存在
+        if (data.info === false) {
+          this.$message({
+            type: 'info',
+            message: '账号不存在'
+          });
+          return;
+        }
+        if (data.success) {
+          this.$message({
+            type: 'success',
+            message: '登录成功'
+          });
+          // 拿到返回的token和username，并存到store
+          let token = data.token;
+          let username = data.username;
+          this.$store.dispatch('UserLogin', token);
+          this.$store.dispatch('UserName', username);
+          // 跳到目标页
+          this.$router.push('HelloWorld');
+        }
+      });
+    },
     handLogin() {
       axios.userSignIn(this.ruleForm).then(({ data }) => {
         // 账号不存在

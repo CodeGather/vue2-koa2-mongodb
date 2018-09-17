@@ -20,9 +20,6 @@ import axios from '@/config/axios'
 export default {
   data () {
     return {
-      title2: '详细机型',
-      value2: ['iPhone', '华为3'],
-      list2: [['小米', 'iPhone', '华为', '情怀', '三星', '其他', '不告诉你'], ['小米1', 'iPhone2', '华为3', '情怀4', '三星5', '其他6', '不告诉你7']],
       listData: [],
       ruleForm: {
         userName: 'admin',
@@ -45,6 +42,31 @@ export default {
         time: '2018-09-08',
       }]
     },1000)
+    axios.findCurriculum({
+      studentId: '16516'
+    }).then(({ data }) => {
+      // 账号不存在
+      if (data.info === false) {
+        this.$message({
+          type: 'info',
+          message: '账号不存在'
+        });
+        return;
+      }
+      if (data.success) {
+        this.$message({
+          type: 'success',
+          message: '登录成功'
+        });
+        // 拿到返回的token和username，并存到store
+        let token = data.token;
+        let username = data.username;
+        this.$store.dispatch('UserLogin', token);
+        this.$store.dispatch('UserName', username);
+        // 跳到目标页
+        this.$router.push('HelloWorld');
+      }
+    });
   },
   methods: {
     handLogin() {

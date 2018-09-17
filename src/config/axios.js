@@ -69,7 +69,7 @@ export default {
   findBindStudent(data) {
     return instance.post('/public/wechat/findBindStudent.do', data);
   },
-  // 测试获取json
+  // 查询学生课程
   findCurriculum(data) {
     return instance.post('/public/wechat/findStudyCurriculum.do', data);
   }

@@ -57,29 +57,33 @@ export default {
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
-    axios.oauth({
-      redirectUrl: 'http://topping.mydrn.cn/home'
-    }).then(({ data }) => {
-       console.log(data)
-      
-    });
+    let urlData = this.$route.query;
+    if(urlData.code && urlData.state){
+      axios.userSignIn({
+        code: urlData.code,
+        state: urlData.state
+      }).then(({ data }) => {
+        console.log(data)
+      });
+    }
   },
   methods: {
     ...mapActions(['Login']),
     async loginIn(data) {
-      this.loading = true;
-      axios.userSignIn({userName:'admin'}).then(({ data }) => {
-        // console.log(data)
-        if (data.msgCode===200) {
-          this.$toast({
-            text: data.msg
-          })
-          this.$store.dispatch('UserLogout');
-          setTimeout(()=>{
-            this.$router.push({ path: '/home' });
-          },1000)
-        }
-      });
+      window.location.href = 'http://topping.mydrn.cn/zhiying/public/wechat/oauth2.do?redirectUrl=http://topping.mydrn.cn/home'
+      // this.loading = true;
+      // axios.userSignIn({userName:'admin'}).then(({ data }) => {
+      //   // console.log(data)
+      //   if (data.msgCode===200) {
+      //     this.$toast({
+      //       text: data.msg
+      //     })
+      //     this.$store.dispatch('UserLogout');
+      //     setTimeout(()=>{
+      //       this.$router.push({ path: '/home' });
+      //     },1000)
+      //   }
+      // });
     }
   }
 }

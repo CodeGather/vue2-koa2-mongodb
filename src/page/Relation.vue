@@ -1,8 +1,8 @@
 <template>
   <div>
-    <group label-width="4.5em" label-margin-right="2em" label-align="right">
-      <x-input title="账号" type="text"  placeholder="必填" v-model="userName"></x-input>
-      <x-input title="密码" type="password" placeholder="必填" v-model="passWord"></x-input>
+    <group label-width="4.2em" label-margin-right="1em" label-align="right">
+      <x-input title="学生姓名" type="text" :is-type="nameValue" ref="refName" placeholder="必填" v-model="userForm.userName"></x-input>
+      <x-input title="学生学号" type="number" :is-type="numValue" ref="refNum" placeholder="必填" v-model="userForm.userNum"></x-input>
     </group>
     <box gap="10px 10px">
       <x-button type="primary" :show-loading="isLoading" :disabled="isLoading" @click.native="handLogin">关联</x-button>
@@ -18,12 +18,22 @@ import axios from '@/config/axios'
 export default {
   data () {
     return {
-      userName: '',
-      passWord: '',
       isLoading: false,
-      ruleForm: {
-        userName: 'admin',
-        password: '123456',
+      nameValue: function(value){ // 学生名字2~5
+        return {
+          valid: value.length > 1 && value.length < 6,
+          msg: "学生姓名输入有误!"
+        }
+      },
+      numValue: function(value){ // 学生学号4~11
+        return {
+          valid: value.length > 3 && value.length < 12,
+          msg: "学生学号输入有误!"
+        }
+      },
+      userForm: {
+        userName: '',
+        userNum: '',
       }
     }
   },
@@ -34,11 +44,19 @@ export default {
   },
   methods: {
     handLogin() {
-      if( !(this.userName && this.passWord) ){ return this.$toast({ text: '姓名或学号不能为空' })}
+      if( !(this.userForm.userName && this.userForm.userNum) ){ 
+        return this.$toast({ text: '姓名或学号不能为空' })
+      }
+      if( !(this.$refs.refNum.valid && this.$refs.refName.valid) ){ 
+        return this.$toast({ 
+          text: this.$refs.refName.errors.format || this.$refs.refNum.errors.format 
+        })
+      }
       this.isLoading = true;
       this.$confirm()
       axios.userSignIn(this.ruleForm).then(({ data }) => {
         console.log(data)
+        this.isLoading = false;
         if (data.msgCode===200) {
           this.$toast({
             text: data.msg
