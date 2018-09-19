@@ -17,7 +17,7 @@
         <flexbox :gutter="10" wrap="wrap">
           <flexbox-item>
             <div class="feature bord_radius">
-              <x-img offset="20" class="course_img" :src="imgURL1"></x-img>
+              <x-img :offset="20" class="course_img" :src="imgURL1"></x-img>
               <box gap="10px">
                 <div class="course_body_head">毕业班高校冲刺</div>
                 <div class="course_body_desc">如果你无法简洁的表达你的想法，那只说明你还不够了解他。</div>
@@ -27,7 +27,7 @@
           </flexbox-item>
           <flexbox-item>
             <div class="feature bord_radius">
-              <x-img offset="20" class="course_img" :src="imgURL1"></x-img>
+              <x-img :offset="20" class="course_img" :src="imgURL1"></x-img>
               <box gap="10px">
                 <div class="course_body_head">非毕业班互动提升</div>
                 <div class="course_body_desc">如果你无法简洁的表达你的想法，那只说明你还不够了解他。</div>
@@ -41,7 +41,7 @@
         <div class="tutor_item bord_radius">
           <div>
             <div class="feature tutor_img">
-              <x-img offset="20" :src="imgURL1"></x-img>
+              <x-img :offset="20" :src="imgURL1"></x-img>
             </div>
           </div>
           <div class="item">
@@ -53,7 +53,7 @@
         <div class="tutor_item bord_radius">
           <div>
             <div class="feature tutor_img">
-              <x-img offset="20" :src="imgURL1"></x-img>
+              <x-img :offset="20" :src="imgURL1"></x-img>
             </div>
           </div>
           <div class="item">
@@ -65,7 +65,7 @@
         <div class="tutor_item bord_radius">
           <div>
             <div class="feature tutor_img">
-              <x-img offset="20" :src="imgURL1"></x-img>
+              <x-img :offset="20" :src="imgURL1"></x-img>
             </div>
           </div>
           <div class="item">

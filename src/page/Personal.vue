@@ -58,6 +58,7 @@ export default {
     //   console.log(data)
     // })
     let urlData = this.$route.query;
+    alert(urlData)
     if(urlData.code && urlData.state){
       axios.userSignIn({
         code: urlData.code,
@@ -70,7 +71,7 @@ export default {
   methods: {
     ...mapActions(['Login']),
     async loginIn(data) {
-      window.location.href = 'http://topping.mydrn.cn/zhiying/public/wechat/oauth2.do?redirectUrl=http://topping.mydrn.cn/home'
+      window.location.href = 'http://topping.mydrn.cn/zhiying/public/wechat/oauth2.do?redirectUrl='+encodeURIComponent('http://topping.mydrn.cn/wechat/personal')
       // this.loading = true;
       // axios.userSignIn({userName:'admin'}).then(({ data }) => {
       //   // console.log(data)
