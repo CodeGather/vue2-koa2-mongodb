@@ -27,7 +27,7 @@ const router = new Router({
   }, {
     path: '/home',
     meta: {
-      title: '首页'
+      title: '致英官网'
     },
     name: 'home',
     component: home

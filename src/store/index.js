@@ -39,7 +39,8 @@ const mutations = {
   USERNAME: (state, data) => {
     // 把用户名存起来
     state.username = data;
-    setStore('username', data);
+    setStore('id', data.id);
+    setStore('openid', data.openid);
   },
   UPDATELOADINGSTATUS: (state, payload) => {
     // 更新loading显示状态

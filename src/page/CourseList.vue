@@ -13,7 +13,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { loginByUsername } from '@/config/api'
+// import { loginByUsername } from '@/config/api'
 
 export default {
   data () {

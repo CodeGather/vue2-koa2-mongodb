@@ -5,7 +5,7 @@
         <img v-initi="{ data: src, config: {width: '100px',height: '100px',borderRadius: '50%'}}">
       </flexbox-item>
       <flexbox-item>
-        <div v-initi="{ data: content, config: {width: '80%',height: '24px',overflow: 'hidden', textOverflow: 'ellipsis'}}"></div>
+        <div v-initi="{ data: nickname, config: {width: '80%',height: '24px',overflow: 'hidden', textOverflow: 'ellipsis'}}"></div>
       </flexbox-item>
     </flexbox>
     <group>
@@ -24,7 +24,7 @@
       </cell>
     </group>
     <box gap="20px 15px">
-      <x-button type="primary" :show-loading="isLoading" @click.native="loginIn">登录</x-button>
+      <x-button type="primary" :show-loading="isLoading" @click.native="loginIn" v-if="!this.$store.state.token">登录</x-button>
     </box>
   </div>
 </template>
@@ -32,13 +32,13 @@
 <script>
 import { mapActions } from 'vuex'
 import axios from '@/config/axios'
+import { getStore } from '@/config/utils'
 
 export default {
   data () {
     return {
       isLoading: false,
-      content: '',
-      title:'',
+      nickname: '',
       src:'',
       studentName: ''
     }
@@ -58,33 +58,51 @@ export default {
     //   console.log(data)
     // })
     let urlData = this.$route.query;
-    alert(urlData)
-    if(urlData.code && urlData.state){
-      axios.userSignIn({
-        code: urlData.code,
-        state: urlData.state
-      }).then(({ data }) => {
-        console.log(data)
-      });
+    // alert(JSON.stringify(urlData))
+    // if(urlData.code && urlData.state){
+    //   }
+    axios.findData({
+    params: {
+      ID: 12345
     }
+  }).then(( data ) => {
+      if(data){
+        this.src = data.data.data.headImgUrl;
+        this.nickname = data.data.data.nickname
+        this.$store.dispatch('UserName', data.data.data);
+        axios.findBindStudent({
+          wechatId: getStore('openid')
+        }).then(( data, error ) => {
+          if(data){
+            this.studentName = ' '
+          }
+        });
+      }
+    }).catch((e)=>{
+      console.log(e)
+    });
+    this.setCookie('name',-1)
+    // console.log(this.$route)
   },
   methods: {
     ...mapActions(['Login']),
     async loginIn(data) {
-      window.location.href = 'http://topping.mydrn.cn/zhiying/public/wechat/oauth2.do?redirectUrl='+encodeURIComponent('http://topping.mydrn.cn/wechat/personal')
-      // this.loading = true;
-      // axios.userSignIn({userName:'admin'}).then(({ data }) => {
-      //   // console.log(data)
-      //   if (data.msgCode===200) {
-      //     this.$toast({
-      //       text: data.msg
-      //     })
-      //     this.$store.dispatch('UserLogout');
-      //     setTimeout(()=>{
-      //       this.$router.push({ path: '/home' });
-      //     },1000)
-      //   }
-      // });
+      if(this.$store.state.token){
+        this.src = '';
+        this.nickname = '';
+        this.$store.dispatch('UserLogout');
+      }else{
+        this.$store.dispatch('UserLogin', true);
+        window.location.href = 'http://topping.vip/zhiying/public/wechat/oauth2.do?redirectUrl='+encodeURIComponent(window.location.href)
+      }
+    },
+    setCookie: function (cname, cvalue, exdays) {
+      var d = new Date();
+      d.setTime(d.getTime() + (exdays * 24 * 60 * 60 * 1000));
+      var expires = "expires=" + d.toUTCString();
+      console.info(cname + "=" + cvalue + "; " + expires);
+      document.cookie = cname + "=" + cvalue + "; " + expires;
+      console.info(document.cookie);
     }
   }
 }
@@ -101,6 +119,7 @@ export default {
     box-sizing: border-box;
     & img{
       width: 100%;
+      overflow: hidden;
     }
   }
 </style>
