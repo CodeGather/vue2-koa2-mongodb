@@ -1,31 +1,12 @@
 <template>
   <div>
-    <section class="list-data" v-if="!relationAdd && userListData.length>0">
-      <ul>
-        <li class="item" v-for="(item,index) in userListData" :key="index">
-          <div>报名课程：<span>{{item.name}}</span></div>
-          <div>报名时间：<span>{{item.time}}</span></div>
-        </li>
-        <li><load-more v-if="userListData.length===0" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more></li>
-      </ul>
-      <box gap="10px 10px">
-        <x-button type="primary" @click.native="switchOpen">继续添加</x-button>
-      </box>
-    </section>
-    <section v-if="relationAdd">
-      <group label-width="4.2em" label-margin-right="1em" label-align="right">
-        <x-input title="学生姓名" type="text" :is-type="nameValue" ref="refName" placeholder="必填" v-model="userForm.name"></x-input>
-        <x-input title="学生学号" type="number" :is-type="numValue" ref="refNum" placeholder="必填" v-model="userForm.studentNumber"></x-input>
-      </group>
-      <box gap="10px 10px">
-        <x-button type="primary" :show-loading="isLoading" :disabled="isLoading" @click.native="submitBindStudent">关联</x-button>
-      </box>
-    </section>
-    <msg v-if="relationAdd">
-      <template slot="buttons">
-        <x-button type="primary">继续添加</x-button>
-      </template>
-    </msg>
+    <group label-width="4.2em" label-margin-right="1em" label-align="right">
+      <x-input title="学生姓名" type="text" :is-type="nameValue" ref="refName" placeholder="必填" v-model="userForm.name"></x-input>
+      <x-input title="学生学号" type="number" :is-type="numValue" ref="refNum" placeholder="必填" v-model="userForm.studentNumber"></x-input>
+    </group>
+    <box gap="10px 10px">
+      <x-button type="primary" :show-loading="isLoading" :disabled="isLoading" @click.native="submitBindStudent">关联</x-button>
+    </box>
   </div>
 </template>
 
@@ -38,13 +19,7 @@ import { getStore } from '@/config/utils'
 export default {
   data () {
     return {
-      swithchShow: true,
-      relationAdd: false,
       isLoading: false,
-      userListData: [{
-        name:'2',
-        time:'12313'
-      }],
       nameValue: function(value){ // 学生名字2~5
         return {
           valid: value.length > 1 && value.length < 6,
@@ -67,22 +42,10 @@ export default {
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
-    axios.findBindStudent({
-      wechatId: getStore('openid')
-    }).then(( e ) => {
-      let bindStudentData = e.data.data;
-      if( bindStudentData > 0 ){
-        this.userListData = bindStudentData
-      }
-    });
   },
   methods: {
-    switchOpen(){
-      this.relationAdd = false
-    },
     submitBindStudent() {
-      this.relationAdd = true
-      /*if( !(this.userForm.name && this.userForm.studentNumber) ){ 
+      if( !(this.userForm.name && this.userForm.studentNumber) ){ 
         return this.$toast({ text: '姓名或学号不能为空' })
       }
       if( !(this.$refs.refNum.valid && this.$refs.refName.valid) ){ 
@@ -102,7 +65,7 @@ export default {
             }
           })
         }
-      });*/
+      });
     },
     bindStudent(e) {
       axios.bindStudent({

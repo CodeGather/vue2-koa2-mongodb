@@ -41,6 +41,7 @@ const mutations = {
     state.username = data;
     setStore('id', data.id);
     setStore('openid', data.openid);
+    setStore('studentNumber', data.studentNumber);
   },
   UPDATELOADINGSTATUS: (state, payload) => {
     // 更新loading显示状态

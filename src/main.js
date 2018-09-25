@@ -23,7 +23,9 @@ import {
   Search,
   XInput,
   Tabbar,
-  TabbarItem
+  TabbarItem,
+  TransferDom,
+  Msg
 } from 'vux';
 
 // Vue.use(WechatPlugin);
@@ -47,6 +49,9 @@ Vue.component(Search.name, Search);
 Vue.component(XInput.name, XInput);
 Vue.component(Tabbar.name, Tabbar);
 Vue.component(TabbarItem.name, TabbarItem);
+Vue.component(Msg.name, Msg);
+
+Vue.directive('transfer-dom', TransferDom);
 
 Vue.use(Message); // 消息集中管理
 Vue.use(VueIniti);

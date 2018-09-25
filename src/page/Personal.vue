@@ -57,23 +57,27 @@ export default {
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
-    let urlData = this.$route.query;
+    // let urlData = this.$route.query;
     // alert(JSON.stringify(urlData))
     // if(urlData.code && urlData.state){
     //   }
-    axios.findData({
-    params: {
-      ID: 12345
-    }
-  }).then(( data ) => {
-      if(data){
-        this.src = data.data.data.headImgUrl;
-        this.nickname = data.data.data.nickname
-        this.$store.dispatch('UserName', data.data.data);
+    axios.findData({}).then(( data ) => {
+      let userData = data.data.data;
+      if(userData.hasOwnProperty('nickname')){
+        this.src = userData.headImgUrl;
+        this.nickname = userData.nickname
+        this.$store.dispatch('UserName', userData);
         axios.findBindStudent({
           wechatId: getStore('openid')
-        }).then(( data, error ) => {
-          if(data){
+        }).then(( e ) => {
+          let bindStudentData = e.data.data;
+          if(bindStudentData>0){
+            let userName = '';
+            bindStudentData.forEach(ele => {
+              userName += ' ' + ele.studentName
+            });
+            this.studentName = userName;
+          }else{
             this.studentName = ' '
           }
         });
