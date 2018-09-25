@@ -132,7 +132,7 @@ export default {
       console.log(e)
     },
     handLogin:()=>{
-      window.location.href = "tel:10086";
+      window.location.href = "tel:18485363312";
     }
   }
 }

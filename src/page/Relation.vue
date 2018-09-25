@@ -60,6 +60,7 @@ export default {
         if (data.msgCode===200) {
           this.$confirm({
             onConfirm: (e)=>{
+              
               this.bindStudent()
             }
           })
