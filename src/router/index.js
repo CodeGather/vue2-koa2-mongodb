@@ -1,6 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import store from '../store/index';
+import axios from '../config/axios';
 
 Vue.use(Router);
 
@@ -55,7 +56,8 @@ const router = new Router({
   }, {
     path: '/personal',
     meta: {
-      title: '我的'
+      title: '我的',
+      requiresAuth: true
     },
     name: 'personal',
     component: personal
@@ -137,13 +139,15 @@ router.beforeEach((to, from, next) => {
     if (token) {
       next();
     } else {
-      this.shareUrl = window.location.href.split('#')[0];
-      next({
-        path: '/login',
-        query: {
-          redirect: from.fullPath
-        } // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由
-      });
+      store.dispatch('UserLogin', true);
+      window.location.href = axios.baseUrlData('http://topping.vip/wechat/personal')
+        // this.shareUrl = window.location.href.split('#')[0];
+        // next({
+        //   path: '/login',
+        //   query: {
+        //     redirect: from.fullPath
+        //   } // 将刚刚要去的路由path（却无权限）作为参数，方便登录成功后直接跳转到该路由
+        // });
 
       /*share(this.shareUrl).then(resolved => {
         console.log(resolved);

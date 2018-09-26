@@ -229,5 +229,8 @@ section{
   bottom:0;
   left: 0;
   width: 100%;
+  & button{
+    border-radius:0;
+  }
 }
 </style>
