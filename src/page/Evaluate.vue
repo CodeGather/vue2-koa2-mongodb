@@ -46,6 +46,20 @@ export default {
   },
   mounted(){
     console.log(this.$store.state.isWechat())
+    axios.findBindStudent({
+      wechatId: getStore('id')
+    }).then(( e ) => {
+      let bindStudentData = e.data.data;
+      if( bindStudentData.length > 0 ){
+        bindStudentData.forEach(ele => {
+          this.listData.push({
+            name:ele.name,
+            value:ele.id
+          })
+        });
+        fn && fn()
+      }
+    });
     axios.findCurriculum({
       studentId: e[0]
     }).then(({ data }) => {
