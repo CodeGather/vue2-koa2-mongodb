@@ -39,13 +39,15 @@ export default {
   },
   methods: {
     handLogin() {
-      this.isLoading = true;
-      // 拿到返回的token和username，并存到store
-      this.$store.dispatch('UserLogin', this.ruleForm.userName);
-      // 跳到目标页
-      setTimeout(()=>{
-        this.$router.push(this.$route.query.redirect);
-      },800)
+      window.location.href = axios.baseUrlData('http://topping.vip/wechat/personal')
+      this.$store.dispatch('UserLogin', true);
+      // this.isLoading = true;
+      // // 拿到返回的token和username，并存到store
+      // this.$store.dispatch('UserLogin', this.ruleForm.userName);
+      // // 跳到目标页
+      // setTimeout(()=>{
+      //   this.$router.push(this.$route.query.redirect);
+      // },800)
       /*axios.userSignUp(this.ruleForm).then(({ data }) => {
         console.log(data)
         if (data.msgCode===200) {
@@ -66,6 +68,9 @@ export default {
 </script>
 
 <style>
+body{
+  background-color:#fff
+}
 .vux-demo {
   text-align: center;
 }

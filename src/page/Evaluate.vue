@@ -45,10 +45,16 @@ export default {
     }
   },
   mounted(){
-    // this.$http.get('/api/v1/json').then((data)=>{
-    //   console.log(data)
-    // })
     console.log(this.$store.state.isWechat())
+    axios.findCurriculum({
+      studentId: e[0]
+    }).then(({ data }) => {
+      this.isLoading = false;
+      let particiList = data.data;
+      if(particiList.length>0){
+        this.partiList = particiList;
+      }
+    });
   },
   methods: {
     findStudyCurriculum(e){

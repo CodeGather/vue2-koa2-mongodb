@@ -2,10 +2,11 @@ import axios from 'axios';
 import store from '../store';
 import router from '../router';
 
+let requtUrl = 'http://topping.vip/zhiying/';
 // 创建axios实例
-var instance = axios.create({
+let instance = axios.create({
   timeout: 5000, // 请求超过5秒即超时返回错误
-  baseURL: 'http://topping.vip/zhiying/',
+  baseURL: requtUrl,
   headers: {
     'Content-Type': 'application/json;charset=UTF-8'
   }
@@ -89,5 +90,8 @@ export default {
   // 查询学生课程
   findCurriculum(data) {
     return instance.post('/f/wechat/findStudyCurriculum.do', data);
+  },
+  baseUrlData(url) {
+    return requtUrl + 'public/wechat/oauth2.do?redirectUrl=' + encodeURIComponent(url)
   }
 };

@@ -1,12 +1,15 @@
 <template>
   <div>
+    <group gutte="5px" v-if="listData.length>1">
+      <popup-picker :title="studentTitle" :data="listData" v-model="studentVal" :columns="1" ref="picker2" show-name @on-change="onChange"></popup-picker>
+    </group>
     <section class="list-data">
       <ul>
-        <li class="item" v-for="(item,index) in listData" :key="index">
+        <li class="item" v-for="(item,index) in partiList" :key="index">
           <div>报名课程：<span>{{item.name}}</span></div>
-          <div>报名时间：<span>{{item.time}}</span></div>
+          <div>报名时间：<span>{{item.createDate}}</span></div>
         </li>
-        <li><load-more v-if="listData.length===0" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more></li>
+        <li><load-more v-if="partiList.length===0" :show-loading="isLoading" :tip="isLoading?'正在加载中':'暂无数据'" background-color="#fbf9fe"></load-more></li>
       </ul>
     </section>
   </div>
@@ -14,83 +17,50 @@
 
 <script>
 import { mapActions } from 'vuex'
-// import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
+import { getStore } from '@/config/utils'
 
 export default {
   data () {
     return {
+      studentTitle: '选择学生',
+      studentVal: [],
+      partiList: [],
       listData: [],
-      ruleForm: {
-        userName: 'admin',
-        password: '123456',
-        checkPass: '',
-      }
+      isLoading: false
     }
   },
   mounted(){
-    // this.$http.get('/api/v1/json').then((data)=>{
-    //   console.log(data)
-    // })
-    console.log(this.$store.state.isWechat())
-    setTimeout(()=>{
-      this.listData = [{
-        name: '数学',
-        time: '2018-09-08',
-      },{
-        name: '语文',
-        time: '2018-09-08',
-      }]
-    },1000)
-    axios.findCurriculum({
-      studentId: '16516'
-    }).then(({ data }) => {
-      // 账号不存在
-      if (data.info === false) {
-        this.$message({
-          type: 'info',
-          message: '账号不存在'
-        });
-        return;
-      }
-      if (data.success) {
-        this.$message({
-          type: 'success',
-          message: '登录成功'
-        });
-        // 拿到返回的token和username，并存到store
-        let token = data.token;
-        let username = data.username;
-        this.$store.dispatch('UserLogin', token);
-        this.$store.dispatch('UserName', username);
-        // 跳到目标页
-        this.$router.push('HelloWorld');
-      }
+    this.finData(()=>{
+      this.onChange([this.listData[0].value])
     });
   },
   methods: {
-    handLogin() {
-      axios.userSignIn(this.ruleForm).then(({ data }) => {
-        // 账号不存在
-        if (data.info === false) {
-          this.$message({
-            type: 'info',
-            message: '账号不存在'
+    finData(fn){
+      axios.findBindStudent({
+        wechatId: getStore('id')
+      }).then(( e ) => {
+        let bindStudentData = e.data.data;
+        if( bindStudentData.length > 0 ){
+          bindStudentData.forEach(ele => {
+            this.listData.push({
+              name:ele.name,
+              value:ele.id
+            })
           });
-          return;
+          fn && fn()
         }
-        if (data.success) {
-          this.$message({
-            type: 'success',
-            message: '登录成功'
-          });
-          // 拿到返回的token和username，并存到store
-          let token = data.token;
-          let username = data.username;
-          this.$store.dispatch('UserLogin', token);
-          this.$store.dispatch('UserName', username);
-          // 跳到目标页
-          this.$router.push('HelloWorld');
+      });
+    },
+    onChange(e){
+      this.isLoading = true;
+      axios.findCurriculum({
+        studentId: e[0]
+      }).then(({ data }) => {
+        this.isLoading = false;
+        let particiList = data.data;
+        if(particiList.length>0){
+          this.partiList = particiList;
         }
       });
     }

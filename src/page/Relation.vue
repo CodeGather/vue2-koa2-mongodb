@@ -3,29 +3,24 @@
     <section class="list-data" v-if="!relationAdd && userListData.length>0">
       <ul>
         <li class="item" v-for="(item,index) in userListData" :key="index">
-          <div>报名课程：<span>{{item.name}}</span></div>
-          <div>报名时间：<span>{{item.time}}</span></div>
+          <div>学生姓名：<span>{{item.name}}</span></div>
+          <div>学生学号：<span>{{item.studentNumber}}</span></div>
         </li>
         <li><load-more v-if="userListData.length===0" :show-loading="false" tip="暂无数据" background-color="#fbf9fe"></load-more></li>
       </ul>
-      <box gap="10px 10px">
-        <x-button type="primary" @click.native="switchOpen">继续添加</x-button>
+      <box gap="10px 0">
+        <x-button type="primary" @click.native="relationAdd=!relationAdd">继续添加</x-button>
       </box>
     </section>
-    <section v-if="relationAdd">
+    <section v-if="relationAdd || userListData.length===0">
       <group label-width="4.2em" label-margin-right="1em" label-align="right">
-        <x-input title="学生姓名" type="text" :is-type="nameValue" ref="refName" placeholder="必填" v-model="userForm.name"></x-input>
-        <x-input title="学生学号" type="number" :is-type="numValue" ref="refNum" placeholder="必填" v-model="userForm.studentNumber"></x-input>
+        <x-input title="学生姓名" type="text" :is-type="nameValue" ref="refName" placeholder="必填" v-model="name"></x-input>
+        <x-input title="学生学号" type="number" :is-type="numValue" ref="refNum" placeholder="必填" v-model="studentNumber"></x-input>
       </group>
       <box gap="10px 10px">
         <x-button type="primary" :show-loading="isLoading" :disabled="isLoading" @click.native="submitBindStudent">关联</x-button>
       </box>
     </section>
-    <msg v-if="relationAdd">
-      <template slot="buttons">
-        <x-button type="primary">继续添加</x-button>
-      </template>
-    </msg>
   </div>
 </template>
 
@@ -34,6 +29,7 @@ import { mapActions } from 'vuex'
 // import { loginByUsername } from '@/utils/api'
 import axios from '@/config/axios'
 import { getStore } from '@/config/utils'
+import { setTimeout } from 'timers';
 
 export default {
   data () {
@@ -41,10 +37,7 @@ export default {
       swithchShow: true,
       relationAdd: false,
       isLoading: false,
-      userListData: [{
-        name:'2',
-        time:'12313'
-      }],
+      userListData: [],
       nameValue: function(value){ // 学生名字2~5
         return {
           valid: value.length > 1 && value.length < 6,
@@ -57,32 +50,33 @@ export default {
           msg: "学生学号输入有误!"
         }
       },
-      userForm: {
-        name: '',
-        studentNumber: '',
-      }
+      name: '',
+      studentNumber: '',
     }
   },
   mounted(){
     // this.$http.get('/api/v1/json').then((data)=>{
     //   console.log(data)
     // })
-    axios.findBindStudent({
-      wechatId: getStore('openid')
-    }).then(( e ) => {
-      let bindStudentData = e.data.data;
-      if( bindStudentData > 0 ){
-        this.userListData = bindStudentData
-      }
-    });
+    this.finData();
   },
   methods: {
+    finData(){
+      axios.findBindStudent({
+        wechatId: getStore('id')
+      }).then(( e ) => {
+        let bindStudentData = e.data.data;
+        if( bindStudentData.length > 0 ){
+          this.userListData = bindStudentData
+        }
+      });
+    },
     switchOpen(){
-      this.relationAdd = false
+      this.finData();
+      this.relationAdd = !this.relationAdd
     },
     submitBindStudent() {
-      this.relationAdd = true
-      /*if( !(this.userForm.name && this.userForm.studentNumber) ){ 
+      if( this.name =='' || this.studentNumber =='' ){ 
         return this.$toast({ text: '姓名或学号不能为空' })
       }
       if( !(this.$refs.refNum.valid && this.$refs.refName.valid) ){ 
@@ -91,7 +85,10 @@ export default {
         })
       }
       this.isLoading = true;
-      axios.findStudent(this.userForm).then(({ data }) => {
+      axios.findStudent({
+        name:this.name,
+        studentNumber: this.studentNumber
+      }).then(({ data }) => {
         this.isLoading = false;
         if (data.data.length===1) {
           this.$confirm({
@@ -101,27 +98,33 @@ export default {
               this.bindStudent(data.data[0].id)
             }
           })
+        }else{
+          this.$toast({ 
+            text: '请核对信息、重新提交' 
+          })
         }
-      });*/
+      });
     },
     bindStudent(e) {
       axios.bindStudent({
         openId: getStore('openid'),
         studentId: e
       }).then(({ data }) => {
-        console.log(data)
         this.isLoading = false;
-        if (data.msgCode===200) {
-          this.$toast({
-            text: data.msg
-          })
-          // 拿到返回的token和username，并存到store
-          this.$store.dispatch('UserLogin', this.ruleForm.userName);
-          // 跳到目标页
+        let tipText = '';
+        if(data.responeCode==0){
+          tipText = '恭喜绑定成功';
           setTimeout(()=>{
-            this.$router.push(this.$route.query.redirect);
-          },800)
+            this.switchOpen();
+          },1000)
+        }else if(data.responeCode=='-1'){
+          tipText = data.responeMsg
+        }else{
+          tipText = '绑定失败！'
         }
+        this.$toast({ 
+          text: tipText
+        })
       });
     }
   }

@@ -14,10 +14,10 @@
       </cell>
       <!-- <cell is-link title="我的课表" link="/curriculum">
         <span slot="icon" class="iconfont icon-kecheng" style="margin-right:5px;"></span>
-      </cell> -->
+      </cell>
       <cell is-link title="作业表现" link="/evaluate">
         <span slot="icon" class="iconfont icon-zuoye" style="margin-right:5px;"></span>
-      </cell>
+      </cell> -->
       <cell is-link title="已参加课程" link="/participated">
       
         <span slot="icon" class="iconfont icon-kecheng2" style="margin-right:5px;"></span>
@@ -68,14 +68,16 @@ export default {
         this.nickname = userData.nickname
         this.$store.dispatch('UserName', userData);
         axios.findBindStudent({
-          wechatId: getStore('openid')
+          wechatId: getStore('id')
         }).then(( e ) => {
           let bindStudentData = e.data.data;
-          if(bindStudentData>0){
+          if(bindStudentData.length>0){
             let userName = '';
-            bindStudentData.forEach(ele => {
-              userName += ' ' + ele.studentName
-            });
+            if(bindStudentData.length===1){
+              userName = bindStudentData[0].name
+            }else{
+              userName = ''+bindStudentData.length
+            }
             this.studentName = userName;
           }else{
             this.studentName = ' '
@@ -85,7 +87,7 @@ export default {
     }).catch((e)=>{
       console.log(e)
     });
-    this.setCookie('name',-1)
+    // this.setCookie('name',-1)
     // console.log(this.$route)
   },
   methods: {
@@ -97,7 +99,7 @@ export default {
         this.$store.dispatch('UserLogout');
       }else{
         this.$store.dispatch('UserLogin', true);
-        window.location.href = 'http://topping.vip/zhiying/public/wechat/oauth2.do?redirectUrl='+encodeURIComponent(window.location.href)
+        window.location.href = axios.baseUrlData(window.location.href)
       }
     },
     setCookie: function (cname, cvalue, exdays) {
