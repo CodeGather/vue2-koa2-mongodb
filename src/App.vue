@@ -5,7 +5,7 @@
       <transition :name="'vux-pop-' + (direction === 'forward' ? 'in' : 'out')">
         <router-view class="router-view" ></router-view>
       </transition>
-      <foot-guide v-if="isShowBer"></foot-guide>
+      <!-- <foot-guide v-if="isShowBer"></foot-guide> -->
     </view-box>
     <loading v-model="isLoading"></loading>
   </div>

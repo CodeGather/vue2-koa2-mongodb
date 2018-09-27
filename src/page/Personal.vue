@@ -14,18 +14,17 @@
       </cell>
       <!-- <cell is-link title="我的课表" link="/curriculum">
         <span slot="icon" class="iconfont icon-kecheng" style="margin-right:5px;"></span>
-      </cell>
+      </cell> -->
       <cell is-link title="作业表现" link="/evaluate">
         <span slot="icon" class="iconfont icon-zuoye" style="margin-right:5px;"></span>
-      </cell> -->
+      </cell>
       <cell is-link title="已参加课程" link="/participated">
-      
         <span slot="icon" class="iconfont icon-kecheng2" style="margin-right:5px;"></span>
       </cell>
     </group>
-    <box gap="20px 15px">
+    <!-- <box gap="20px 15px">
       <x-button type="primary" :show-loading="isLoading" @click.native="loginIn" v-if="!this.$store.state.token">登录</x-button>
-    </box>
+    </box> -->
   </div>
 </template>
 

@@ -9,7 +9,7 @@
           <div>报名课程：<span>{{item.name}}</span></div>
           <div>报名时间：<span>{{item.createDate}}</span></div>
         </li>
-        <li><load-more v-if="partiList.length===0" :show-loading="isLoading" :tip="isLoading?'正在加载中':'暂无数据'" background-color="#fbf9fe"></load-more></li>
+        <li><load-more :show-loading="isLoading" :tip="isLoading?'正在加载中':'暂无数据'" background-color="#fbf9fe"></load-more></li>
       </ul>
     </section>
   </div>
@@ -59,7 +59,7 @@ export default {
       }).then(({ data }) => {
         this.isLoading = false;
         let particiList = data.data;
-        if(particiList.length>0){
+        if(particiList){
           this.partiList = particiList;
         }
       });

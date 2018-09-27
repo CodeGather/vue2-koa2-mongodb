@@ -21,8 +21,8 @@
                 <x-img :offset="-100" :src="aboutImg" :default-src="aboutImg"></x-img>
                 <box gap="10px">
                   <div class="course_body_head">毕业班高校冲刺</div>
-                  <div class="course_body_desc">如果你无法简洁的表达你的想法，那只说明你还不够了解他。</div>
-                  <div class="course_body_foot">--阿尔伯特●爱因斯坦</div>
+                  <div class="course_body_desc">专属方案针对性更强 个性化毕业班老师匹配 全方位升学服务志愿指导</div>
+                  <!-- <div class="course_body_foot">--阿尔伯特●爱因斯坦</div> -->
                 </box>
               </div>
             </flexbox-item>
@@ -31,22 +31,22 @@
                 <x-img :offset="-100" :src="aboutImg" :default-src="aboutImg"></x-img>
                 <box gap="10px">
                   <div class="course_body_head">非毕业班互动提升</div>
-                  <div class="course_body_desc">如果你无法简洁的表达你的想法，那只说明你还不够了解他。</div>
-                  <div class="course_body_foot">--阿尔伯特●爱因斯坦</div>
+                  <div class="course_body_desc">中西结合教学 趣味互动课堂 帮助提升学习力 名师知识精讲<br/><br/></div>
+                  <!-- <div class="course_body_foot">--阿尔伯特●爱因斯坦</div> -->
                 </box>
               </div>
             </flexbox-item>
           </flexbox>
         </section>
         <section>
-          <div class="title">教师简介</div>
+          <div class="title">教师语录</div>
           <div class="tutor_item bord_radius">
             <div class="item">
               教授的过程实际上就是“接触-挖掘-领会-创造”的过程。应该不断探索灵活、高效的学方法，联系生活，深入浅出，让学生自觉地自发地去体会。一把钥匙开一把锁 ，不同的学生有不同的教学方法。我们从教以来，一直孜孜不倦地追求教学艺术。
             </div>
           </div>
         </section>
-        <section>
+        <!--<section>
           <div class="title">致英专属导师</div>
           <divider>严格的选拔和培养体系</divider>
           <div class="tutor_item bord_radius">
@@ -73,7 +73,7 @@
               英语教师个人心得：学英语就像建高楼大厦，语法是基本骨架，而单词是一块块砖头（Learning English is like building tall buildings. Grammar is the basic framework and words are bricks.）
             </div>
           </div>
-        </section>
+        </section>-->
         <section>
           <div class="title">关于我们</div>
           <div class="tutor_item">
@@ -82,7 +82,7 @@
             </div>
             <div class="bord_radius">
               <div class="item">
-                致英致力于小/初/高个性化辅导、学科同步辅导、补差培优、家庭教育咨询服务于一体化的教育培训机构。我们汇聚众多优秀教师智慧，长期以来积累了极其丰富而且颇具实效的个性化辅导案例。我们深信：适合孩子特点的优秀教师是提高学生成绩的关键！我们的教育理念：激发学习兴趣，优化学习方法及习惯，有针对性地查缺补漏，选择我们，给孩子一个改变的机会，实现快乐高效地学习。联系地址：府前路公安局对面
+                致英致力于小/初/高个性化辅导、学科同步辅导、补差培优、家庭教育咨询服务于一体化的教育培训机构。我们汇聚众多优秀教师智慧，长期以来积累了极其丰富而且颇具实效的个性化辅导案例。<br/><br/>我们深信：适合孩子特点的优秀教师是提高学生成绩的关键！我们的教育理念：激发学习兴趣，优化学习方法及习惯，有针对性地查缺补漏，选择我们，给孩子一个改变的机会，实现快乐高效地学习。联系地址：府前路公安局对面
               </div>
             </div>
           </div>
@@ -107,7 +107,7 @@ export default {
       aboutImg: aboutImg,
       ad_list:[{
         url: 'javascript:',
-        img: aboutImg,
+        img: imgURL1,
         title: '恭喜致英官网正式开通'
       }]
     }
@@ -189,7 +189,7 @@ section{
     }
   }
   &:nth-child(3),
-  &:nth-child(5){
+  &:last-child{
     & .title{
       margin-bottom: 20px;
     }
