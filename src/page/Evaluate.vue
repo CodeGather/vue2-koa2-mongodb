@@ -10,9 +10,10 @@
     <section class="list-data">
       <ul>
         <li class="item" v-for="(item,index) in partiData" :key="index">
-          <div>学习科目：<span>{{item.name}}</span></div>
-          <div>学习时间：<span>{{item.createDate}}</span></div>
-          <div>课堂表现：<span>{{item.remarks||'暂无'}}</span></div>
+          <div>学习科目：{{item.name}}</div>
+          <div>课堂表现：{{item.remarks||'暂无'}}</div>
+          <div>学习时间：{{item.createDate}}</div>
+          <div>课堂表现：{{item.remarks||'暂无'}}</div>
         </li>
         <li><load-more :show-loading="isLoading" :tip="isLoading?'正在加载中':'暂无数据'" background-color="#fbf9fe"></load-more></li>
       </ul>
